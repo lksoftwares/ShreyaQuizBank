@@ -1,0 +1,24 @@
+.homee{
+  display: grid;
+  gap: 10px;
+grid-template-columns:  repeat(4, 1fr);
+grid-auto-rows: minmax(180px, auto);
+}
+
+.boxx{
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-left: 10px;
+  width: 320px;
+}
+
+.box2{
+  background-color: rgb(211, 46, 211);
+  }
+  .box3{
+    background-color: rgb(240, 78, 164);
+  }
+  .box5{
+    background-color: rgb(72, 197, 228);
+  }

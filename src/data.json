@@ -1,0 +1,15 @@
+{"status": [
+  {
+    "statusid": 1,
+"label" : "Active",
+"value": "Active"
+  },
+  {
+    "statusid": 2,
+"label" : "Deactive",
+"value": "Deactive "
+
+  }
+ ]
+
+}

@@ -1,0 +1,128 @@
+h2{
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 40px;
+  background-color:rgb(33, 87, 167);
+margin-top: -18px;
+margin-bottom: 70px;
+padding-top: 20px;
+padding-bottom: 20px;
+}
+.load{
+  font-size: 30px;
+}
+.icon{
+  color: red;
+}
+  .icon1{
+    color: rgb(59, 240, 59);
+  }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table,th,tr,td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+
+}
+
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  height: 50px;
+  border-collapse: collapse;
+
+}
+
+
+th {
+  background-color:rgb(33, 87, 167);
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* tr:nth-child(even) {
+  background-color:rgb(33, 87, 167);
+
+} */
+
+button{
+  margin-top: 10px;
+}
+.button1{
+  background-color: red;
+}
+.button2{
+  background-color: rgb(40, 187, 40);
+}
+
+.btun{
+width: 200px;
+float: right;
+margin-bottom: 15px;
+margin-top: -20px;
+}
+.modal-content{
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--bs-modal-color);
+    pointer-events: auto;
+    background-color: var(--bs-modal-bg);
+    background-clip: padding-box;
+    border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+    border-radius: var(--bs-modal-border-radius);
+    outline: 0;
+}
+.fonts
+{
+  font-size: 20px;
+  font-weight:700 ;
+  margin-top: 20px;
+}
+.dep{
+  background-color: #2a3447;
+  color: white;
+}
+
+.s{
+  background-color: black;
+}
+
+
+.inputt{
+width: 450px;
+}
+
+.buton{
+margin-left: 300px;
+}
+.buttonn{
+  margin-left: 60px;
+}
+
+.small{
+  width: 200px;
+  height: 45px;
+  margin-top:5px;
+
+
+}
+.margin{
+  margin-top: 5px;
+}
+.buton1{
+  margin-left: 200px;
+  }
+  .buttonn1{
+    margin-left: 60px;
+  }
+  
+

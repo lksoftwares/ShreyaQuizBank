@@ -1,0 +1,26 @@
+.headingg{
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 20px;
+
+}
+.icons{
+font-size: 30px !important;
+padding-right: 10px;
+margin-top: 10px;}
+
+
+.dataa{
+  font-size: 35px !important;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.titlee{
+  margin-top: -20px;
+}
+
+.charts{
+  width: 100%;
+  height: 100%;
+}

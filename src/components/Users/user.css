@@ -1,0 +1,27 @@
+input{
+  width: 645px;
+  height: 50px;
+}
+
+.mar
+{
+  margin-top: 10px;
+}
+
+.button{
+  margin-left: 440px;
+}
+
+.color{
+  background-color: white;
+  color: black;
+}
+.icon{
+  color: red;
+  font-size: 30px;
+}
+  .icon1{
+    color: rgb(59, 240, 59);
+    font-size: 25px;
+
+  }

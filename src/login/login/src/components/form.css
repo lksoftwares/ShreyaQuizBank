@@ -1,0 +1,31 @@
+.bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+  }
+  
+  @media (min-width: 1025px) {
+  .h-custom-2 {
+  height: 100%;
+  }
+  }
+  .bd{
+    border: 2px solid black;
+    width: 450px;
+    height: 550px;
+    
+  }
+ .log{
+  color: blue;
+  font-weight: bolder;
+  font-size: 40px;
+ }
+ .inp{
+  width: 350px;
+ }
+ 
+ .marg{
+  margin-left: 50px;
+ }

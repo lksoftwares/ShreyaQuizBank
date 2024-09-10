@@ -1,0 +1,27 @@
+.input-checkbox{
+  width: 30px;
+}
+
+.input-cont{
+  width: 200px;
+  margin-left: 20px;
+  margin-right: 30px;
+}
+.cont{
+  margin-bottom: 50px;
+}
+.dropdown-cont{
+  width: 350px;
+  height: 10px;
+  margin-left: 20px;
+  color: black;
+  background-color: white;
+}
+
+
+.top{
+  margin-top: 0px;
+}
+label{
+  margin-left: 20px;
+}
