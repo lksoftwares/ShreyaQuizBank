@@ -189,48 +189,46 @@ function Quiz() {
     <div>
       <ToastContainer />
       <h2 className="top">Quiz</h2>
-      <label className="user">Select Time:</label>
-      <br />
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        className="input-cont"
-        placeholder="Enter Time"
-      />
-      <br />
-      <label className="user">Select Date:</label>
-      <br />
-      <input
-        type="datetime-local"
-        className="input-cont"
-        id="appt-time"
-        name="appt-time"
-        step="2"
-        value={date}
-        onChange={handleDateChange}
-      />{" "}
-      <br />
-      <label className="user">Select Topic:</label>
-      <Select
-        value={selectedTopic}
-        onChange={handleTopicChange}
-        className="dropdown-cont cont  "
-        options={topics}
-        placeholder="Select a topic..."
-      />{" "}
-      <br />
-      <label className="user">Select User:</label>
-      <Select
-        isMulti
-        value={selectedOptions}
-        className="dropdown-cont user "
-        onChange={handleChange}
-        options={options}
-        placeholder="Select User..."
-      />
-      <br />
-      <br /> <br />
+      <div className="input-wrapper">
+        <label className="user">Select Time:</label>
+        <br />
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          className="input-cont"
+          placeholder="Enter Time"
+        />
+        <label className="user marginn">Select Date:</label>
+        <input
+          type="datetime-local"
+          className="input-cont "
+          id="appt-time"
+          name="appt-time"
+          step="2"
+          value={date}
+          onChange={handleDateChange}
+        />{" "}
+      </div>
+      <div className="input-wrapper">
+        <label className="user">Select Topic:</label>
+        <Select
+          value={selectedTopic}
+          onChange={handleTopicChange}
+          className=" input-cont  "
+          options={topics}
+          placeholder="Select topic"
+        />{" "}
+        <label className="user marginn">Select User:</label>
+        <Select
+          isMulti
+          value={selectedOptions}
+          className="input-cont  "
+          onChange={handleChange}
+          options={options}
+          placeholder="Select User"
+        />
+      </div>
       {loading && <p className="load">Loading Please Wait...</p>}
       {error && <p>Error: {error}</p>}
       <table className="table table-striped">

@@ -1,4 +1,4 @@
-.input-checkbox{
+/* .input-checkbox{
   width: 30px;
 }
 
@@ -27,4 +27,36 @@ margin-top: 0px;
 }
 .datetime{
   background-color: black;
+} */
+
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  width: 1000px;
+  margin-left: 50px;
+}
+
+.input-cont,
+.dropdown-cont {
+  flex: 1; 
+  min-width: 100px;
+  margin-bottom: 10px;
+  color: black;
+  background-color: white;
+}
+
+.user {
+  color: white;
+margin-top: -10px;}
+
+
+.input-checkbox{
+  width: 30px;
+}
+.marginn{
+  margin-left: 100px;
 }
