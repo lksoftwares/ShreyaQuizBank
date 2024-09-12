@@ -1,12 +1,11 @@
 import { IoHome } from "react-icons/io5";
-
+import { BsQuestionSquareFill } from "react-icons/bs";
+import { MdSystemSecurityUpdateGood } from "react-icons/md";
 import { MdBorderColor } from "react-icons/md";
-import { GiMoneyStack } from "react-icons/gi";
 import { ImProfile } from "react-icons/im";
-import { SiGoogleforms } from "react-icons/si";
-import { PiBuildingApartmentFill } from "react-icons/pi";
-import { GrNotes } from "react-icons/gr";
+import { RiAdminFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
+import { BsClipboard2Data } from "react-icons/bs";
 
 export const menu = [
   {
@@ -23,7 +22,7 @@ export const menu = [
         id: 2,
         title: "Questions",
         url: "/questions",
-        icon: <MdBorderColor />,
+        icon: <BsQuestionSquareFill />,
       },
 
       {
@@ -43,18 +42,24 @@ export const menu = [
         id: 5,
         title: "Roles",
         url: "/roles",
-        icon: <GiMoneyStack />,
+        icon: <RiAdminFill />,
       },
       {
         id: 6,
         title: "Transaction",
         url: "/quiztransactions",
-        icon: <GiMoneyStack />,
+        icon: <MdSystemSecurityUpdateGood />,
       },
       {
         id: 7,
         title: "Quiz",
         url: "/quiz",
+        icon: <BsClipboard2Data />,
+      },
+      {
+        id: 8,
+        title: "User Form",
+        url: "/userform",
         icon: <ImProfile />,
       },
       // {

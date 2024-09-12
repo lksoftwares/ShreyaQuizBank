@@ -71,12 +71,16 @@ function Login() {
       );
       toast.warning(response.data);
       console.log("formData546", response.data.token);
+      console.log("gtrdf", response.data);
       setSuccess("Registration successful!");
-      console.log(response.data);
+      localStorage.setItem("ID", response.data.user_id);
+      localStorage.setItem("Roleid", response.data.role_ID);
+      console.log("Roleid", response.data.role_ID);
+      console.log(response.data.user_id);
       localStorage.setItem("token", response.data.token);
 
       toast.success(response.data);
-      navigate("/home");
+      navigate("/admin");
     } catch (errors) {
       toast.error(
         "You have entered invalid information...Please enter valid details"

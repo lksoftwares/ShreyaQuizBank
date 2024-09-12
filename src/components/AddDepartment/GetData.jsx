@@ -131,7 +131,7 @@ export default function GetData() {
 
       console.log("Response:", response.data);
     } catch {
-      toast.error(response.data);
+      toast.warning(response.data);
     }
   };
 
@@ -234,16 +234,16 @@ export default function GetData() {
     setFormData(row);
     openModals();
   };
-  // const handleModalClose = () => {
-  //   setModalVisible(false);
-  //   setSelectedRow(null);
-  //   setFormData({});
-  // };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const handleModalClose = () => {
+    setIsOpens(false); // Close the edit modal
+    setSelectedRow(null); // Reset the selected row
+    setFormData({}); // Reset the form data
+  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
@@ -274,7 +274,7 @@ export default function GetData() {
         }
       );
       Data();
-
+      handleModalClose();
       console.log(res.data);
       toast.success("Edited Successfully");
 
@@ -286,17 +286,6 @@ export default function GetData() {
   useEffect(() => {
     Data();
   }, []);
-
-  //status dropdown
-  // const [selectedOptions, setSelectedOptions] = useState({
-  //   Label: "",
-  // });
-
-  // function handleSelect(data) {
-  //   console.log("daataaaa", data);
-
-  //   setSelectedOptions(data);
-  // }
 
   return (
     <>
@@ -652,7 +641,11 @@ export default function GetData() {
                   <button type="submit" className="button1 buton ">
                     Save
                   </button>
-                  <button type="button" className="button2 buttonn ">
+                  <button
+                    type="button"
+                    className="button2 buttonn "
+                    onClick={handleModalClose}
+                  >
                     Cancel
                   </button>
                 </span>

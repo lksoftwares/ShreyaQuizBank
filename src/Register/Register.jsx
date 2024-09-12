@@ -56,7 +56,7 @@ function Register() {
 
       <div className="login-wrapper">
         <div className="login-form-container">
-          <h2 className="login-title">Register Here</h2>
+          <h3 className="login-title">Register Here</h3>
 
           <Form onSubmit={handleSubmit} className="login-form">
             <Form.Group className="mb-3" controlId="formBasicName">

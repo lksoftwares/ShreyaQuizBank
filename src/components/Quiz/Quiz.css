@@ -8,20 +8,23 @@
   margin-right: 30px;
 }
 .cont{
-  margin-bottom: 50px;
+  margin-bottom:40px;
 }
 .dropdown-cont{
-  width: 350px;
+  width: 300px;
   height: 10px;
-  margin-left: 20px;
   color: black;
   background-color: white;
-}
-
-
-.top{
-  margin-top: 0px;
-}
-label{
   margin-left: 20px;
+}
+
+.user{
+  margin-left: 20px;
+  color: white;
+}
+.top{
+margin-top: 0px;
+}
+.datetime{
+  background-color: black;
 }

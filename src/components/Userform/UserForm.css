@@ -1,20 +1,47 @@
+.bg{
+  
+
+background: rgb(42,42,167);
+background: linear-gradient(90deg, #222b3c
+0%, #6a778f 95%); 
+}
+fieldset{
+  background-color: white;
+}
+.button-cont{
+  float: right;
+  margin-right: 40px;
+
+}
+
+.h1{
+  text-align: center;
+  margin-top: -70px;
+  color: white;
+}
+.submit{
+  float: left;
+  width: 200px;
+}
+
+
 .App {
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
-
 }
 
-fieldset {
+.fieldset {
   display: flex;
   width: 700px;
   padding: 16px;
   border: 1px solid #000000;
   border-radius: 4px;
   flex-direction: column;
-  border-top: 70px solid rgb(28, 28, 158);
+  border-top: 70px solid rgba(42,42,167,1);
   padding-left: 30px;
+  margin-top: 50px;
 }
 
 .justify{
@@ -24,6 +51,7 @@ fieldset {
 h3{
   text-align: center;
   font-size: 27px;
+  color: black;
   
 }
 label{
@@ -32,6 +60,7 @@ label{
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-top: 20px;
+  color: black;
   
 }
 
@@ -45,7 +74,7 @@ p{
 input {
   border-radius: 4px;
   border: 1px solid #000000;
-  height: 44px;
+  height: 48px;
   width: 650px;
   margin-bottom: 15px;
   padding-left: 7px;
@@ -113,58 +142,3 @@ button:hover{
 
 
 
-/*label {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-sup {
-  color: red;
-  top: -2px;
-  font-size: 95%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-
-
-
-.Field {
-  position: relative;
-  padding-bottom: 24px;
-  display: flex;
-  flex-direction: column;
-}
-
-.FieldError {
-  position: absolute;
-  bottom: -6px;
-  color: red;
-  font-size: 12px;
-}
-
-.Row {
-  display: flex;
-  flex-direction: row;
-}
-
-button {
-  padding: 12px;
-  width: 240px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: darkblue;
-  color: white;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled,
-button[disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-  cursor: not-allowed;
-} */

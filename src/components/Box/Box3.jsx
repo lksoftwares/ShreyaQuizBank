@@ -1,4 +1,4 @@
-import { BsQuestionSquareFill } from "react-icons/bs";
+import { RiQuestionAnswerFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "../Box/Box.css";
 import axios from "axios";
@@ -20,7 +20,6 @@ export default function Box3() {
         },
       }).then((response) => {
         setmyData(response.data.totalTestToday);
-        console.log(response.data.totalTestToday);
       });
     } catch (err) {
       setError(err.message);
@@ -43,7 +42,7 @@ export default function Box3() {
       <Link to="/"></Link>
       <div className="chartInfo"></div>
       <center>
-        <BsQuestionSquareFill className="icons"></BsQuestionSquareFill>
+        <RiQuestionAnswerFill className="icons"></RiQuestionAnswerFill>
 
         <span className="dataa">{myData}</span>
       </center>

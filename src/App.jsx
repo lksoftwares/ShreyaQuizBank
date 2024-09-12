@@ -11,6 +11,7 @@ import GetTopic from "./components/AddTopic/AddTopic";
 import Roles from "./components/Roles/Roles";
 import Quiztransaction from "./components/Quiztransactions/Quiztransaction";
 import Quiz from "./components/Quiz/Quiz";
+import UserForm from "./components/Userform/UserForm";
 function App() {
   const Layout = () => {
     return (
@@ -41,84 +42,106 @@ function App() {
     },
 
     {
-      path: "/questions",
+      path: "/admin/questions",
       element: <GetData />,
     },
     {
-      path: "/topic",
+      path: "/admin/topic",
       element: <GetTopic />,
     },
     {
       path: "/inputques",
       element: <InputQues />,
     },
+
     {
-      path: "/home",
+      path: "/admin",
       element: <Layout />,
       children: [
         {
-          path: "/home",
+          path: "/admin",
           element: <Home />,
         },
       ],
     },
     {
-      path: "/questions",
+      path: "/admin/questions",
       element: <Layout />,
       children: [
         {
-          path: "/questions",
+          path: "/admin/questions",
           element: <GetData />,
         },
       ],
     },
     {
-      path: "/topic",
+      path: "/admin/topics",
       element: <Layout />,
       children: [
         {
-          path: "/topic",
+          path: "/admin/topics",
           element: <GetTopic />,
         },
       ],
     },
     {
-      path: "/users",
+      path: "/admin/users",
       element: <Layout />,
       children: [
         {
-          path: "/users",
+          path: "/admin/users",
           element: <User />,
         },
       ],
     },
     {
-      path: "/roles",
+      path: "/admin/roles",
       element: <Layout />,
       children: [
         {
-          path: "/roles",
+          path: "/admin/roles",
           element: <Roles />,
         },
       ],
     },
     {
-      path: "/quiztransactions",
+      path: "/admin/transaction",
       element: <Layout />,
       children: [
         {
-          path: "/quiztransactions",
+          path: "/admin/transaction",
           element: <Quiztransaction />,
         },
       ],
     },
     {
-      path: "/quiz",
+      path: "/admin/quiz",
       element: <Layout />,
       children: [
         {
-          path: "/quiz",
+          path: "/admin/quiz",
           element: <Quiz />,
+        },
+      ],
+    },
+    {
+      path: "/user/quiz",
+      element: <Layout />,
+      children: [
+        {
+          path: "/user/quiz",
+          element: <UserForm />,
+        },
+      ],
+    },
+
+    {
+      path: "/user/home",
+      element: <Layout />,
+      children: [
+        {
+          path: "/user/home",
+          element: <Home />,
         },
       ],
     },

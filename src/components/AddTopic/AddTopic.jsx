@@ -3,119 +3,99 @@ import axios from "axios";
 import "../AddDepartment/Table.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReactDOM from "react-dom";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
-// import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+
 const customStyles = {
   content: {
     top: "50%",
     left: "50%",
     right: "auto",
-
     width: 470,
     height: 300,
     backgroundColor: "#384256",
     color: "white",
     borderColor: "Black",
-
     bottom: "auto",
-
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
   },
 };
+
 export default function GetTopic() {
-  const [myData, setmyData] = useState([]);
+  const [myData, setMyData] = useState([]);
   const [show, setShow] = useState(false);
   const [inputValues, setInputValues] = useState("");
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalsIsOpen, setIsOpens] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    topic_ID: "",
+    topic_Name: "",
+  });
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleClose = () => setIsOpen(false);
+  const handleShow = () => setIsOpen(true);
 
   const handleData = (e) => {
     setInputValues(e.target.value);
   };
 
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
-  let subtitles;
-  const [modalsIsOpen, setIsOpens] = React.useState(false);
-  function openModals() {
+  const handleEditClick = (row) => {
+    setSelectedRow(row);
+    setFormData(row);
     setIsOpens(true);
-  }
-  function closeModals() {
-    setIsOpens(false);
-  }
-  function afterOpenModals() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-  const [loading, setLoading] = useState(false);
+  };
 
-  //get data
-  const Data = async () => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     const token = localStorage.getItem("token");
-    setLoading(true);
     try {
-      const res = await axios({
-        url: "http://192.168.1.54:7241/Topic/AllTopic",
-        method: "GET",
-        data: myData,
-
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        setmyData(response.data);
-      });
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      const res = await axios.put(
+        `http://192.168.1.54:7241/Topic/updateTopics/${formData.topic_ID}`,
+        { topic_Name: formData.topic_Name },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      await Data();
+      toast.success("Edited Successfully");
+      setIsOpens(false);
+    } catch (error) {
+      console.error("Error updating data:", error);
     }
   };
-  useEffect(() => {
-    Data();
-  }, []);
-
-  //post data
-  const token = localStorage.getItem("token");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
         "http://192.168.1.54:7241/Topic/AddTopic",
-        {
-          Topic_Name: inputValues,
-        }
+        { Topic_Name: inputValues }
       );
-      Data();
+      await Data();
       toast.success(response.data);
+      setInputValues("");
+      setIsOpen(false); // Close the modal after successful submission
     } catch {
       console.error();
     }
   };
 
-  //delete data
-
   const handleDelete = async (topic_ID) => {
     const token = localStorage.getItem("token");
-
     window.alert("Are you sure to want to delete?");
     await axios.delete(
       `http://192.168.1.54:7241/Topic/deleteTopic/${topic_ID}`,
@@ -125,68 +105,29 @@ export default function GetTopic() {
         },
       }
     );
-    Data()
-      .then((response) => {
-        toast.success("Deleted Successfully");
-      })
-      .catch((err) => console.log(err));
+    await Data();
+    toast.success("Deleted Successfully");
   };
 
-  //edit data
-  // update data
-
-  // const [modalVisible, setModalVisible] = useState(false);
-  const [formData, setFormData] = useState({
-    topic_ID: "",
-    topic_Name: "",
-  });
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const handleEditClick = (row) => {
-    setSelectedRow(row);
-    setFormData(row);
-    openModals();
-  };
-  // const handleModalClose = () => {
-  //   setModalVisible(false);
-  //   setSelectedRow(null);
-  //   setFormData({});
-  // };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  const Data = async () => {
     const token = localStorage.getItem("token");
-    console.log("formData", formData);
+    setLoading(true);
     try {
-      const res = await axios.put(
-        `http://192.168.1.54:7241/Topic/updateTopics/${formData.topic_ID}`,
-
-        { topic_Name: formData.topic_Name },
-
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      Data()
-        .then((response) => {
-          toast.success("Edited Successfully");
-          fetchData(); // Refresh data
-          handleModalClose();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // Close modal
-    } catch (error) {
-      console.error("Error updating data:", error);
+      const res = await axios({
+        url: "http://192.168.1.54:7241/Topic/AllTopic",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setMyData(res.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     Data();
   }, []);
@@ -194,13 +135,12 @@ export default function GetTopic() {
   return (
     <>
       <div>
-        <ToastContainer></ToastContainer>
+        <ToastContainer />
         <div className="card-body">
           <span>
-            {" "}
-            <h2> Topics</h2>
-            <button onClick={openModal} className="btun">
-              Add Topic{" "}
+            <h2>Topics</h2>
+            <button onClick={() => setIsOpen(true)} className="btun">
+              Add Topic
             </button>
           </span>
           {loading && <p className="load">Loading Please Wait...</p>}
@@ -225,7 +165,6 @@ export default function GetTopic() {
                       />
                     </center>
                   </td>
-
                   <td>
                     <center>
                       <MdDelete
@@ -240,17 +179,14 @@ export default function GetTopic() {
           </table>
         </div>
 
-        {/* edit modal */}
-
+        {/* Edit Modal */}
         <Modal
           isOpen={modalsIsOpen}
-          onAfterOpen={afterOpenModals}
-          onRequestClose={closeModals}
+          onRequestClose={() => setIsOpens(false)}
           style={customStyles}
         >
           <form onSubmit={handleFormSubmit}>
             <center>
-              {" "}
               <h1>Edit Topics</h1>
             </center>
             <hr />
@@ -270,21 +206,23 @@ export default function GetTopic() {
             <button type="submit" className="button1 buton1 ">
               Save
             </button>
-            <button type="button" className="button2 buttonn1 ">
+            <button
+              type="button"
+              className="button2 buttonn1 "
+              onClick={() => setIsOpens(false)}
+            >
               Cancel
             </button>
           </form>
         </Modal>
 
-        {/* add modal */}
+        {/* Add Modal */}
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
+          onRequestClose={() => setIsOpen(false)}
           style={customStyles}
         >
           <center>
-            {" "}
             <h1>Add Topics</h1>
           </center>
           <hr />
@@ -307,13 +245,12 @@ export default function GetTopic() {
               className="button1 buton1 "
               variant="primary"
               onClick={handleSubmit}
-              onChange={handleClose}
             >
               Add
             </Button>
             <Button
               variant="danger"
-              onClick={handleClose}
+              onClick={() => setIsOpen(false)}
               className="button2 buttonn1 "
             >
               Close

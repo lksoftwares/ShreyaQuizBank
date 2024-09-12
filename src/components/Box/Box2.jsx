@@ -21,7 +21,6 @@ export default function Box1() {
         },
       }).then((response) => {
         setmyData(response.data.totalTest);
-        console.log(response.data.totalTest);
       });
     } catch (err) {
       setError(err.message);
