@@ -1,12 +1,12 @@
 h2{
   text-align: center;
   margin-bottom: 30px;
-  font-size: 40px;
+  font-size: 30px;
   background-color:rgb(33, 87, 167);
 margin-top: -18px;
-margin-bottom: 70px;
-padding-top: 20px;
-padding-bottom: 20px;
+margin-bottom: 40px;
+padding-top: 15px;
+padding-bottom: 15px;
 }
 .load{
   font-size: 30px;
@@ -66,20 +66,16 @@ button{
 width: 200px;
 float: right;
 margin-bottom: 15px;
-margin-top: -20px;
+margin-top: -10px;
 }
 .modal-content{
   position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
-    color: var(--bs-modal-color);
-    pointer-events: auto;
-    background-color: var(--bs-modal-bg);
-    background-clip: padding-box;
-    border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
-    border-radius: var(--bs-modal-border-radius);
-    outline: 0;
+}
+.search-label{
+  margin-left: 20px;
 }
 .fonts
 {
@@ -96,6 +92,10 @@ margin-top: -20px;
 .s{
   background-color: black;
 }
+.modall{
+margin-top: 400px;
+margin-left: 800px;
+padding: 20px;}
 
 
 .inputt{

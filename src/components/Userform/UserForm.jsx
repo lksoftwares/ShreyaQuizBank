@@ -1,4 +1,4 @@
-import "../Userform/UserForm.css";
+import "./UserForm.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +11,7 @@ function UserForm() {
   const [formData, setFormData] = useState([]);
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("ID");
+  const url = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     if (userId) {
@@ -23,7 +24,7 @@ function UserForm() {
     setError(null);
     try {
       const response = await fetch(
-        `http://192.168.1.54:7241/QuizTransaction/GetAllQuizQuestion?User_ID=${user_id}`,
+        `${url}/QuizTransaction/GetAllQuizQuestion?User_ID=${user_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -35,7 +36,6 @@ function UserForm() {
       }
       const data = await response.json();
       setQuestions(data);
-      // Initialize formData with the questions
       setFormData(
         data.map((question) => ({
           Ques_ID: question.ques_ID,
@@ -62,9 +62,8 @@ function UserForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // POST request to the submit answer endpoint
       const response = await axios.post(
-        "http://192.168.1.54:7241/Quiz_AnsTransaction/SubmitAnswer",
+        `${url}/Quiz_AnsTransaction/SubmitAnswer`,
         formData,
         {
           headers: {
@@ -72,9 +71,8 @@ function UserForm() {
           },
         }
       );
-      localStorage.setItem("token", response.data.token);
       console.log(response.data);
-      toast.success("All answers submitted successfully");
+      toast.success(response.data);
     } catch (err) {
       toast.error("Failed to submit answers: " + err.message);
     }

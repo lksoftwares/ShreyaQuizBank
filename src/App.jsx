@@ -6,12 +6,14 @@ import GetData from "./components/AddDepartment/GetData";
 import "./App.scss";
 import User from "./components/Users/User";
 import Menu from "./components/Menu/Menu";
+import UserHome from "./components/UserHome/UserHome";
 import InputQues from "./components/Inputques/InputQues";
 import GetTopic from "./components/AddTopic/AddTopic";
 import Roles from "./components/Roles/Roles";
 import Quiztransaction from "./components/Quiztransactions/Quiztransaction";
 import Quiz from "./components/Quiz/Quiz";
 import UserForm from "./components/Userform/UserForm";
+import QuizResult from "./components/QuizResult/QuizResult";
 function App() {
   const Layout = () => {
     return (
@@ -124,6 +126,7 @@ function App() {
         },
       ],
     },
+
     {
       path: "/user/quiz",
       element: <Layout />,
@@ -141,7 +144,17 @@ function App() {
       children: [
         {
           path: "/user/home",
-          element: <Home />,
+          element: <UserHome />,
+        },
+      ],
+    },
+    {
+      path: "/user/quizresult",
+      element: <Layout />,
+      children: [
+        {
+          path: "/user/quizresult",
+          element: <QuizResult />,
         },
       ],
     },

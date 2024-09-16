@@ -1,42 +1,26 @@
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "../Box/Box.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import apiService from "../../../api";
 
 export default function Box1() {
-  const token = localStorage.getItem("token");
-
   const [myData, setmyData] = useState([]);
-  const [err, setError] = useState("");
 
   const Data = async () => {
-    try {
-      const res = await axios({
-        url: "http://192.168.1.54:7241/Quiz_AnsTransaction/TotalQuizAnsTransaction",
-        method: "GET",
-
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        setmyData(response.data.totalTest);
-      });
-    } catch (err) {
-      setError(err.message);
-    }
+    const data = await apiService.get(
+      "Quiz_AnsTransaction/TotalQuizAnsTransaction"
+    );
+    setmyData(data.totalTest);
+    console.log(data.totalTest);
   };
   Data();
-  useEffect(() => {
-    Data();
-  }, []);
-
   return (
     <div className="chartBox">
       <div className="boxInfo">
         <div className="titlee">
           <center>
-            <h1 className="headingg">Total Quiz Answer</h1>
+            <h1 className="headingg">Total Quiz Completed</h1>
           </center>
         </div>
       </div>{" "}

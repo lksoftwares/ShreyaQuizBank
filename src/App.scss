@@ -5,7 +5,7 @@
 font-family: "Inter" ,sans-serif;
 background-color: $main-bg;
 color: white;
-// width: 2000px;
+width: 2000px;
 
 }
 .containerr{
@@ -24,3 +24,10 @@ width: 100%;
 }
 
 
+
+
+@media  (min-width: 1440px) {
+  .mainn{
+width: 100%;
+  }
+} 

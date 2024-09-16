@@ -1,16 +1,14 @@
-import { BsQuestionSquareFill } from "react-icons/bs";
+import { FaUsers } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import "../Box/Box.css";
 import { useState } from "react";
 import apiService from "../../../api";
 
-export default function Box2() {
-  const [myData, setmyData] = useState({
-    totalQuestions: "",
-  });
+export default function Box4() {
+  const [myData, setmyData] = useState([]);
   const Data = async () => {
-    const data = await apiService.get("Question/TotalQuestion");
-    setmyData(data);
+    const data = await apiService.get("Users/AllUSers");
+    setmyData(data.totalUsers);
     console.log(data);
   };
   Data();
@@ -19,16 +17,16 @@ export default function Box2() {
       <div className="boxInfo">
         <div className="titlee">
           <center>
-            <h1 className="headingg">Total Questions</h1>
+            <h1 className="headingg">Total Users</h1>
           </center>
         </div>
       </div>{" "}
       <Link to="/"></Link>
       <div className="chartInfo"></div>
       <center>
-        <BsQuestionSquareFill className="icons"></BsQuestionSquareFill>
+        <FaUsers className="icons"></FaUsers>
 
-        <span className="dataa">{myData.totalQuestions}</span>
+        <span className="dataa">{myData}</span>
       </center>
     </div>
   );

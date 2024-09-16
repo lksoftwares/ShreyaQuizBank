@@ -39,8 +39,7 @@ import "./Menu.css";
 import React from "react";
 import { Link } from "react-router-dom";
 import Image from "../image";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { IoHome } from "react-icons/io5";
 import { BsQuestionSquareFill } from "react-icons/bs";
 import { MdSystemSecurityUpdateGood } from "react-icons/md";
@@ -49,25 +48,18 @@ import { ImProfile } from "react-icons/im";
 import { RiAdminFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import { BsClipboard2Data } from "react-icons/bs";
+import apiService from "../../../api";
+
 const Menu = () => {
+  const role_ID = localStorage.getItem("Roleid");
+
   const [menu, setMenu] = useState([]);
 
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const role_ID = localStorage.getItem("Roleid");
-        const res = await axios({
-          method: "get",
-          url: `http://192.168.1.54:7241/Menues/getallMenues?Role_ID=${role_ID}`,
-        });
-        setMenu(res.data);
-        console.log("data", res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMenu();
-  }, []);
+  const fetchMenu = async () => {
+    const data = await apiService.get(`Menues/getallMenues?Role_ID=${role_ID}`);
+    setMenu(data);
+  };
+  fetchMenu();
   return (
     <div className="menuu">
       <center>
@@ -80,11 +72,11 @@ const Menu = () => {
           <ul key={menu_id}>
             <Link className="menuuu" to={item.menu_URL}>
               {menu_id === 0 && <IoHome />}
-              {menu_id === 1 && <BsQuestionSquareFill />}
-              {menu_id === 2 && <MdSystemSecurityUpdateGood />}
-              {menu_id === 3 && <MdBorderColor />}
+              {menu_id === 1 && <FaUser />}
+              {menu_id === 2 && <MdBorderColor />}
+              {menu_id === 3 && <BsQuestionSquareFill />}
               {menu_id === 4 && <ImProfile />}
-              {menu_id === 5 && <FaUser />}
+              {menu_id === 5 && <MdSystemSecurityUpdateGood />}
               {menu_id === 6 && <RiAdminFill />}
               {menu_id === 7 && <BsClipboard2Data />}
 

@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import apiService from "../../api";
 
 function Login() {
+  const token = localStorage.getItem("token");
+
   const [formData, setFormData] = useState({
     userRole: "",
     user_Email: "",
@@ -27,26 +30,16 @@ function Login() {
     setSelectOptions(data);
   }
   const [options, setOptions] = useState([]);
-  useEffect(() => {
-    const fetchOptions = async () => {
-      try {
-        const response = await axios({
-          method: "get",
-          url: "http://192.168.1.54:7241/Roles/getallrole",
-        });
-        const userOptions = response.data.map((user) => ({
-          id: user.role_ID,
-          label: user.roleName,
-        }));
 
-        setOptions(userOptions);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-    fetchOptions();
-  }, []);
-
+  const fetchOptions = async () => {
+    const data = await apiService.get("Roles/getallrole");
+    const userOptions = data.map((user) => ({
+      id: user.role_ID,
+      label: user.roleName,
+    }));
+    setOptions(userOptions);
+  };
+  fetchOptions();
   //post data
   const navigate = useNavigate();
 
@@ -63,10 +56,10 @@ function Login() {
     try {
       formData.role_ID = selectOptions.id;
       console.log("formData", formData.role_ID);
-
+      console.log("formdata", formData);
       // POST request to the registration endpoint
       const response = await axios.post(
-        "http://192.168.1.54:7241/Users/Login",
+        "http://192.168.1.56:7241/Users/Login",
         formData
       );
       toast.warning(response.data);

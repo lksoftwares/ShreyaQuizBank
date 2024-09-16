@@ -3,7 +3,11 @@
 @media  (max-width: 720px) {
   img{
     display: none;
-  }  }
+  } 
+  .login-form-container{
+    margin-right: 300px;
+  }
+}
 
 .login-wrapper {
   display: flex;

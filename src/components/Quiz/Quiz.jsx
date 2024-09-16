@@ -4,8 +4,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../Quiz/Quiz.css";
 import Select from "react-select";
+import apiService from "../../../api";
 
 function Quiz() {
+  const url = import.meta.env.VITE_BASE_URL;
+  const token = localStorage.getItem("token");
+
   const [myData, setMyData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,84 +23,41 @@ function Quiz() {
   const [checkedQues, setCheckedQues] = useState([]);
 
   const fetchData = async (topic = "") => {
-    const token = localStorage.getItem("token");
-
     setLoading(true);
-    setError(null);
-    try {
-      const res = await axios.get(
-        `http://192.168.1.54:7241/Question/AllQuestions?Topic_Name=${topic}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setMyData(res.data);
-      setCheckedQues(res.data.map((ques) => ques.ques_ID));
-
-      filterData(res.data, topic);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    const data = await apiService.get(
+      `Question/AllQuestions?Topic_Name=${topic}`
+    );
+    setMyData(data);
+    setCheckedQues(data.map((ques) => ques.ques_ID));
+    filterData(data, topic);
+    setLoading(false);
   };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get(
-          "http://192.168.1.54:7241/Users/AllUSers",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const optionsData = response.data.map((option) => ({
-          value: option.user_ID,
-          label: option.user_Name,
-        }));
-        console.log(selectedOptions.user_ID);
-        setOptions(optionsData);
-      } catch (error) {
-        console.error("Error fetching options:", error);
-      }
-    };
-
     fetchData();
   }, []);
+  //get all users
+  const fetchDataa = async () => {
+    const data = await apiService.get("Users/AllUSers");
+    console.log("sd", data);
+    const optionsData = data.usersLists.map((option) => ({
+      value: option.user_ID,
+      label: option.user_Name,
+    }));
+    setOptions(optionsData);
+  };
+  fetchDataa();
+  const fetchTopics = async () => {
+    setLoading(true);
+    const data = await apiService.get("Topic/AllTopic");
+    const optionsData = data.map((option) => ({
+      value: option.topic_ID,
+      label: option.topic_Name,
+    }));
+    setTopics(optionsData);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchTopics = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get(
-          "http://192.168.1.54:7241/Topic/AllTopic",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const optionsData = response.data.map((option) => ({
-          value: option.topic_ID,
-          label: option.topic_Name,
-        }));
-        setTopics(optionsData);
-      } catch (error) {
-        console.error("Error fetching topics:", error);
-      }
-    };
-
     fetchTopics();
   }, []);
   const [selectedQues, setSelectedQues] = useState([]);
@@ -133,33 +94,28 @@ function Quiz() {
       toast.warning("No questions selected.");
       return;
     }
-    try {
-      const token = localStorage.getItem("token");
+    const userIds = selectedOptions.map((option) => option.value);
 
-      const userIds = selectedOptions.map((option) => option.value);
+    const QuestionData = userIds.flatMap((userId) =>
+      selectedQues.map((ques_ID) => ({
+        ques_ID,
+        Quiz_Date: date,
+        User_ID: userId,
+        Allowed_Time: inputValue,
+      }))
+    );
 
-      const QuestionData = userIds.flatMap((userId) =>
-        selectedQues.map((ques_ID) => ({
-          ques_ID,
-          Quiz_Date: date,
-          User_ID: userId,
-          Allowed_Time: inputValue,
-        }))
-      );
-
-      await axios({
-        method: "post",
-        url: `http://192.168.1.54:7241/QuizTransaction/AddQuizTransaction`,
-        data: QuestionData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(QuestionData);
-      toast.success("Added Successfully");
-    } catch (error) {
-      console.error("Error saving attendance:", error);
-    }
+    await axios({
+      method: "post",
+      url: `${url}/QuizTransaction/AddQuizTransaction`,
+      data: QuestionData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      toast.success(response.data);
+    });
+    console.log(QuestionData);
   };
 
   useEffect(() => {
@@ -188,7 +144,7 @@ function Quiz() {
   return (
     <div>
       <ToastContainer />
-      <h2 className="top">Quiz</h2>
+      <h2 className="top">Quiz Transactions</h2>
       <div className="input-wrapper">
         <label className="user">Select Time:</label>
         <br />

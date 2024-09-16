@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import Select from "react-select";
 import axios from "axios";
 function InputQues() {
+  const token = localStorage.getItem("token");
+  const url = import.meta.env.VITE_BASE_URL;
+
   //for topic
   const [selectOptions, setSelectOptions] = useState("");
   function handleChoose(data) {
@@ -13,11 +16,10 @@ function InputQues() {
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const token = localStorage.getItem("token");
         console.log(token);
         const response = await axios({
           method: "get",
-          url: "http://192.168.1.54:7241/Topic/AllTopic",
+          url: `${url}/Topic/AllTopic`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,11 +45,10 @@ function InputQues() {
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const token = localStorage.getItem("token");
         console.log(token);
         const response = await axios({
           method: "get",
-          url: "http://192.168.1.54:7241/QuesType/QuesType",
+          url: `${url}/QuesType/QuesType`,
           headers: {
             Authorization: `Bearer ${token}`,
           },

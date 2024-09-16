@@ -1,35 +1,19 @@
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "../Box/Box.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import apiService from "../../../api";
 
 export default function Box3() {
-  const token = localStorage.getItem("token");
-  const [err, setError] = useState("");
   const [myData, setmyData] = useState([]);
 
   const Data = async () => {
-    try {
-      const res = await axios({
-        url: "http://192.168.1.54:7241/Quiz_AnsTransaction/TodayAnsTransaction",
-        method: "GET",
-
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        setmyData(response.data.totalTestToday);
-      });
-    } catch (err) {
-      setError(err.message);
-    }
+    const data = await apiService.get(
+      "Quiz_AnsTransaction/TodayAnsTransaction"
+    );
+    setmyData(data.totalTestToday);
   };
   Data();
-  useEffect(() => {
-    Data();
-  }, []);
-
   return (
     <div className="chartBox">
       <div className="boxInfo">

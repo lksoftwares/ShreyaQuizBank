@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Register.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiService from "../../api";
 
 function Register() {
-  const [errors, setErrors] = useState({});
+  const url = import.meta.env.VITE_BASE_URL;
   const [formData, setFormData] = useState({
     user_Name: "",
     user_Email: "",
@@ -31,22 +31,9 @@ function Register() {
     e.preventDefault();
     setLoading(true);
     setSuccess(null);
-
-    try {
-      // POST request to the registration endpoint
-      const response = await axios.post(
-        "http://192.168.1.54:7241/Users/register",
-        formData
-      );
-      localStorage.setItem("token", response.data.token);
-      setSuccess("Registration successful!");
-      console.log(response.data);
-      toast.success("Register Successfully");
-    } catch (err) {
-      toast.error(err);
-    } finally {
-      setLoading(false);
-    }
+    const response = await apiService.post("Users/register", formData);
+    localStorage.setItem("token", response.token);
+    toast.success(response);
   };
 
   return (

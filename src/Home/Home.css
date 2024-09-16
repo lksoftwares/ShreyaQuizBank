@@ -11,14 +11,24 @@ grid-auto-rows: minmax(180px, auto);
   border: 1px solid black;
   margin-left: 10px;
   width: 320px;
+
 }
 
 .box2{
   background-color: rgb(211, 46, 211);
+  grid-row: span 3; /* Makes the box span across all 3 columns */
+
   }
   .box3{
     background-color: rgb(240, 78, 164);
   }
-  .box5{
+
+  .box4{
     background-color: rgb(72, 197, 228);
+  }
+.box5{
+  background-color: rgb(67, 216, 171);
+}
+  .box1{
+    background-color: rgb(245, 98, 98);
   }
