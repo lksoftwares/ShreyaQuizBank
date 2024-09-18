@@ -1,53 +1,52 @@
 import "./UserForm.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apiService from "../../../api";
+import { Link } from "react-router-dom";
 function UserForm() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [formData, setFormData] = useState([]);
-  const token = localStorage.getItem("token");
   const userId = localStorage.getItem("ID");
-  const url = import.meta.env.VITE_BASE_URL;
+
+  // userdetails
+  const [userDetails, setUserDetails] = useState(null);
+  const user_ID = localStorage.getItem("ID");
+  const fetchUserDetailsById = async () => {
+    const response = await apiService.get(`Users/AllUsers?User_ID=${user_ID}`);
+    if (response.usersLists && response.usersLists.length > 0) {
+      setUserDetails(response.usersLists[0]);
+    }
+  };
+  useEffect(() => {
+    if (user_ID) {
+      fetchUserDetailsById();
+    }
+  }, [user_ID]);
 
   useEffect(() => {
     if (userId) {
       fetchQuestionsByUserId(userId);
     }
   }, [userId]);
-
+  //fetch questions
   const fetchQuestionsByUserId = async (user_id) => {
     setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        `${url}/QuizTransaction/GetAllQuizQuestion?User_ID=${user_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setQuestions(data);
-      setFormData(
-        data.map((question) => ({
-          Ques_ID: question.ques_ID,
-          User_ID: userId,
-          Answer: "",
-        }))
-      );
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+    const data = await apiService.get(
+      `QuizTransaction/GetAllQuizQuestion?User_ID=${user_id}`
+    );
+    setQuestions(data);
+    setFormData(
+      data.map((question) => ({
+        Ques_ID: question.ques_ID,
+        User_ID: userId,
+        Answer: "",
+      }))
+    );
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -61,21 +60,11 @@ function UserForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${url}/Quiz_AnsTransaction/SubmitAnswer`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      toast.success(response.data);
-    } catch (err) {
-      toast.error("Failed to submit answers: " + err.message);
-    }
+    const response = await apiService.post(
+      "Quiz_AnsTransaction/SubmitAnswer",
+      formData
+    );
+    toast.success(response);
   };
 
   const handleNextQuestion = () => {
@@ -98,83 +87,149 @@ function UserForm() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  const hasOptions =
+    currentQuestion?.opt_A ||
+    currentQuestion?.opt_B ||
+    currentQuestion?.opt_C ||
+    currentQuestion?.opt_D;
+
   return (
     <div className="App bg">
       <ToastContainer />
 
       <form onSubmit={handleSubmit}>
-        <fieldset className="fieldset">
-          <h1 className="h1">Knowledge Test Quiz</h1>
-          {questions.length === 0 ? (
-            <p>No questions available</p>
-          ) : (
-            <div>
-              <h3>Question Description:</h3>
-              <input
-                type="text"
-                placeholder="Enter Question here"
-                readOnly
-                value={currentQuestion.ques_Desc}
-              />
-              <h3>Answer Options</h3>
+        {userDetails && (
+          <h2 className="user"> Welcome {userDetails.user_Name}...</h2>
+        )}
+        <center>
+          <Link to="/">
+            <button
+              className=" logout-btn"
+              onClick={() => {
+                localStorage.clear();
+                toast.info("Logged out successfully!");
+              }}
+            >
+              Logout
+            </button>
+          </Link>
+          <fieldset className="fieldset">
+            <h1 className="h1">
+              Knowledge Test Quiz
+              <div className="quesno">
+                {currentQuestionIndex + 1} / {questions.length}
+              </div>
+            </h1>
+
+            {questions.length === 0 ? (
+              <p>No questions available</p>
+            ) : (
               <div>
-                <input type="text" className="short" placeholder="A" readOnly />
+                <h3></h3>
+                <h3>Question Description: </h3>
                 <input
                   type="text"
-                  className="option"
-                  placeholder="Option A"
+                  placeholder="Enter Question here"
                   readOnly
-                  value={currentQuestion.opt_A}
+                  value={currentQuestion.ques_Desc}
+                  className="text-cont"
                 />
-                <span>
-                  <input
-                    type="text"
-                    className="short short-box"
-                    placeholder="B"
-                    readOnly
-                  />
-                  <input
-                    type="text"
-                    className="option"
-                    placeholder="Option B"
-                    readOnly
-                    value={currentQuestion.opt_B}
-                  />
-                </span>
-                <input type="text" className="short" placeholder="C" readOnly />
-                <input
-                  type="text"
-                  className="option"
-                  placeholder="Option C"
-                  readOnly
-                  value={currentQuestion.opt_C}
-                />
-                <span>
-                  <input
-                    type="text"
-                    className="short short-box"
-                    placeholder="D"
-                    readOnly
-                  />
-                  <input
-                    type="text"
-                    className="option"
-                    placeholder="Option D"
-                    readOnly
-                    value={currentQuestion.opt_D}
-                  />
-                </span>
-                <br />
-                <br />
-                <label htmlFor="">Your Answer: </label>
-                <br />
-                <br />
+                {hasOptions && (
+                  <>
+                    <h3>Answer Options:</h3>
+                    <div className="options-container">
+                      {/* Options A and B */}
+                      <div className="options-row">
+                        <div className="option-pair">
+                          {currentQuestion.opt_A && (
+                            <div className="option-box">
+                              <input
+                                type="text"
+                                className="short"
+                                placeholder="A"
+                                readOnly
+                              />
+                              <input
+                                type="text"
+                                className="option"
+                                placeholder="Option A"
+                                readOnly
+                                value={currentQuestion.opt_A}
+                              />
+                            </div>
+                          )}
+
+                          {currentQuestion.opt_B && (
+                            <div className="option-box">
+                              <input
+                                type="text"
+                                className="short short-cont"
+                                placeholder="B"
+                                readOnly
+                              />
+                              <input
+                                type="text"
+                                className="option"
+                                placeholder="Option B"
+                                readOnly
+                                value={currentQuestion.opt_B}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Options C and D */}
+                      <div className="options-row">
+                        <div className="option-pair">
+                          {currentQuestion.opt_C && (
+                            <div className="option-box">
+                              <input
+                                type="text"
+                                className="short"
+                                placeholder="C"
+                                readOnly
+                              />
+                              <input
+                                type="text"
+                                className="option"
+                                placeholder="Option C"
+                                readOnly
+                                value={currentQuestion.opt_C}
+                              />
+                            </div>
+                          )}
+
+                          {currentQuestion.opt_D && (
+                            <div className="option-box">
+                              <input
+                                type="text"
+                                className="short short-cont"
+                                placeholder="D"
+                                readOnly
+                              />
+                              <input
+                                type="text"
+                                className="option"
+                                placeholder="Option D"
+                                readOnly
+                                value={currentQuestion.opt_D}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+                <h3>Your Answer: </h3>
                 <input
                   type="text"
                   className="long"
                   placeholder="Enter Your Answer"
                   value={formData[currentQuestionIndex]?.Answer || ""}
                   onChange={handleChange}
+                  maxLength={hasOptions ? 1 : undefined} // Limit to 1 character for MCQs
                 />
                 <br />
                 <span>
@@ -201,9 +256,9 @@ function UserForm() {
                   </button>
                 )}
               </div>
-            </div>
-          )}
-        </fieldset>
+            )}
+          </fieldset>
+        </center>
       </form>
     </div>
   );

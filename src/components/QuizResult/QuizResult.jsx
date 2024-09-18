@@ -3,6 +3,7 @@ import axios from "axios";
 import "../AddDepartment/Table.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -31,21 +32,16 @@ export default function QuizResult() {
   const Data = async () => {
     setLoading(true);
 
-    try {
-      const response = await axios({
-        url: `${url}/Quiz_AnsTransaction/Result?User_ID=${user_ID}`,
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setmyData(response.data.resultList);
-      //console.log(response.data);
-    } catch (err) {
-      console.error(err.message);
-    } finally {
-      setLoading(false);
-    }
+    const response = await axios({
+      url: `${url}/Quiz_AnsTransaction/Result?User_ID=${user_ID}`,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setmyData(response.data.resultList);
+    //console.log(response.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -59,6 +55,17 @@ export default function QuizResult() {
         <div className="card-body">
           <span>
             <h2>Answers</h2>
+            <Link to="/">
+              <button
+                className=" logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  toast.info("Logged out successfully!");
+                }}
+              >
+                Logout
+              </button>
+            </Link>
           </span>
           {loading && <p className="load">Loading Please Wait...</p>}
           <table className="table table-striped">

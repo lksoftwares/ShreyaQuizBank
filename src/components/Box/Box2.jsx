@@ -1,4 +1,4 @@
-import { RiQuestionAnswerFill } from "react-icons/ri";
+import { GrCompliance } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import "../Box/Box.css";
 import { useState } from "react";
@@ -17,20 +17,22 @@ export default function Box1() {
   Data();
   return (
     <div className="chartBox">
-      <div className="boxInfo">
-        <div className="titlee">
-          <center>
-            <h1 className="headingg">Total Quiz Completed</h1>
-          </center>
-        </div>
-      </div>{" "}
-      <Link to="/"></Link>
-      <div className="chartInfo"></div>
-      <center>
-        <RiQuestionAnswerFill className="icons"></RiQuestionAnswerFill>
+      <Link to="/admin/transaction" className="no-underline">
+        <div className="boxInfo">
+          <div className="titlee">
+            <center>
+              <h1 className="headingg">Total Quiz Completed</h1>
+            </center>
+          </div>
+        </div>{" "}
+        <Link to="/"></Link>
+        <div className="chartInfo"></div>
+        <center>
+          <GrCompliance className="icons"></GrCompliance>
 
-        <span className="dataa">{myData}</span>
-      </center>
+          <span className="dataa">{myData}</span>
+        </center>
+      </Link>
     </div>
   );
 }

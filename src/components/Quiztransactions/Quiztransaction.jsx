@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import apiService from "../../../api";
+import { Link } from "react-router-dom";
 
 export default function Quiztransaction() {
   const [myData, setMyData] = useState([]);
@@ -27,6 +28,7 @@ export default function Quiztransaction() {
     const response = await apiService.delete(
       `QuizTransaction/deleteQuizTransaction/${quiz_ID}`
     );
+
     toast.success(response);
     Data();
   };
@@ -37,6 +39,17 @@ export default function Quiztransaction() {
         <div className="card-body">
           <span>
             <h2>Question Transaction</h2>
+            <Link to="/">
+              <button
+                className=" logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  toast.info("Logged out successfully!");
+                }}
+              >
+                Logout
+              </button>
+            </Link>
           </span>
           {loading && <p className="load">Loading Please Wait...</p>}
 

@@ -563,6 +563,8 @@
 // }
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import { Link } from "react-router-dom";
+
 import Modal from "react-modal";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
@@ -584,8 +586,6 @@ const customStyles = {
 };
 
 export default function GetData() {
-  const url = import.meta.env.VITE_BASE_URL;
-  const token = localStorage.getItem("token");
   let subtitle;
 
   function openModal() {
@@ -712,7 +712,7 @@ export default function GetData() {
       });
       setmyData(filteredData);
     } catch (error) {
-      toast.error("Failed to fetch data");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -783,10 +783,22 @@ export default function GetData() {
       <div className="card-body">
         <span>
           <h2> Questions</h2>
-          <button onClick={openModal} className="btun">
-            Add Questions
-          </button>
-        </span>{" "}
+          <Link to="/">
+            <button
+              className=" logout-btn"
+              onClick={() => {
+                localStorage.clear();
+                toast.info("Logged out successfully!");
+              }}
+            >
+              Logout
+            </button>
+          </Link>{" "}
+        </span>
+
+        <button onClick={openModal} className="btun">
+          Add Questions
+        </button>
         <div className="search-container">
           <label className="search ">Search By Topic Name: </label>
           <input

@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import Button from "react-bootstrap/Button";
 import apiService from "../../../api";
+import { Link } from "react-router-dom";
 
 const customStyles = {
   content: {
@@ -107,10 +108,22 @@ export default function GetTopic() {
         <div className="card-body">
           <span>
             <h2>Topics</h2>
-            <button onClick={() => setIsOpen(true)} className="btun">
-              Add Topic
-            </button>
+            <Link to="/">
+              <button
+                className=" logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  toast.info("Logged out successfully!");
+                }}
+              >
+                Logout
+              </button>
+            </Link>
           </span>
+          <button onClick={() => setIsOpen(true)} className="btun">
+            Add Topic
+          </button>
+
           <label className="search">Search Topics: </label>
           <input
             type="text"

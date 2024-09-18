@@ -9,7 +9,7 @@ import Modal from "react-modal";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import apiService from "../../../api";
-
+import { Link } from "react-router-dom";
 const customStyles = {
   content: {
     right: "auto",
@@ -34,7 +34,6 @@ const customstyles = {
 };
 
 export default function User() {
-  const token = localStorage.getItem("token");
   const url = import.meta.env.VITE_BASE_URL;
   const [myData, setMyData] = useState([]);
   const [filteredData, setFilteredData] = useState([]); // Data to be displayed after filtering
@@ -196,6 +195,17 @@ export default function User() {
         <div className="card-body">
           <span>
             <h2>Users</h2>
+            <Link to="/">
+              <button
+                className=" logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  toast.info("Logged out successfully!");
+                }}
+              >
+                Logout
+              </button>
+            </Link>
           </span>
           <button onClick={() => setIsOpen(true)} className="btun">
             Add Users

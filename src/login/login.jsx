@@ -71,9 +71,15 @@ function Login() {
       console.log("Roleid", response.data.role_ID);
       console.log(response.data.user_id);
       localStorage.setItem("token", response.data.token);
-
       toast.success(response.data);
-      navigate("/admin");
+      localStorage.getItem("Roleid");
+      const Role_Id = response.data.role_ID;
+
+      if (Role_Id === 5) {
+        navigate("/admin");
+      } else {
+        navigate("/user/home");
+      }
     } catch (errors) {
       toast.error(
         "You have entered invalid information...Please enter valid details"
@@ -83,7 +89,6 @@ function Login() {
       setLoading(false);
     }
   };
-
   // const Token =response.token
 
   return (

@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Define the base URL from environment variables
 const url = import.meta.env.VITE_BASE_URL;
 
 const token = localStorage.getItem("token");

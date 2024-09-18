@@ -1,0 +1,26 @@
+/* marquee.css */
+.marquee-container {
+  width: 100%; /* Container width */
+  overflow: hidden; /* Hide overflow */
+  position: relative; /* For positioning child elements */
+  margin-bottom: 30px;
+  font-size: 27px;
+  font-weight: bold;
+  
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap; /* Prevent text from wrapping */
+  animation: marquee 10s linear infinite; /* Animation properties */
+  color: black;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%); /* Start off-screen to the right */
+  }
+  100% {
+    transform: translateX(-100%); /* End off-screen to the left */
+  }
+}

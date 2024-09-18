@@ -1,15 +1,25 @@
 .headingg{
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: 20px;
-
+}
+.headinggs{
+  font-size: 26px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 0px;
+}
+.titl{
+  margin-top: -103px !important;
 }
 .icons{
-font-size: 30px !important;
+font-size: 35px !important;
 padding-right: 10px;
 margin-top: 10px;}
+.right{
+  margin-left: 150px;
 
+}
 
 .dataa{
   font-size: 35px !important;
@@ -23,4 +33,24 @@ margin-top: 10px;}
 .charts{
   width: 100%;
   height: 100%;
+}
+.admin-icon{
+  margin-left: 40px;
+}
+.list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size:  20px;
+  margin-left: 100px;
+
+}
+.no-underline {
+  text-decoration: none;
+  color: white;
+}
+.ques{
+  font-size: 26px;
+  text-align: center;
+  margin-top: 0px !important;
 }

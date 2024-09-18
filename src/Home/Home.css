@@ -1,6 +1,5 @@
 .homee{
   display: grid;
-  gap: 10px;
 grid-template-columns:  repeat(4, 1fr);
 grid-auto-rows: minmax(180px, auto);
 }
@@ -11,24 +10,32 @@ grid-auto-rows: minmax(180px, auto);
   border: 1px solid black;
   margin-left: 10px;
   width: 320px;
+  height: 130px;
+
+  
 
 }
 
 .box2{
-  background-color: rgb(211, 46, 211);
-  grid-row: span 3; /* Makes the box span across all 3 columns */
+  background-color: rgb(196, 22, 196);
+  grid-row: span 2; /* Makes the box span across all 3 columns */
+height: 310px;
 
   }
   .box3{
-    background-color: rgb(240, 78, 164);
+    background-color: rgb(224, 43, 140);
   }
 
   .box4{
     background-color: rgb(72, 197, 228);
   }
 .box5{
-  background-color: rgb(67, 216, 171);
+  background-color: rgb(245, 98, 98);
+  margin-left: 50px;
 }
-  .box1{
-    background-color: rgb(245, 98, 98);
+ 
+  .box6{
+background-color: rgb(35, 183, 138);
+margin-left: 50px;
+
   }
