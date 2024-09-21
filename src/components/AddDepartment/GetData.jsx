@@ -563,7 +563,11 @@
 // }
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import { FaSignOutAlt } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer";
+import Datetime from "../datetime";
 
 import Modal from "react-modal";
 import { BsPencilSquare } from "react-icons/bs";
@@ -572,6 +576,7 @@ import { ToastContainer, toast } from "react-toastify";
 import apiService from "../../../api";
 import "./Table.css";
 import Button from "react-bootstrap/Button";
+import { IoMdAddCircle } from "react-icons/io";
 
 const customStyles = {
   content: {
@@ -781,49 +786,55 @@ export default function GetData() {
     <>
       <ToastContainer />
       <div className="card-body">
-        <span>
-          <h2> Questions</h2>
-          <Link to="/">
-            <button
-              className=" logout-btn"
-              onClick={() => {
-                localStorage.clear();
-                toast.info("Logged out successfully!");
-              }}
-            >
-              Logout
+        <div className="header-container">
+          <div>
+            {" "}
+            <Link to="/">
+              <button
+                className=" logout-btn"
+                onClick={() => {
+                  localStorage.clear();
+                  toast.info("Logged out successfully!");
+                }}
+              >
+                <FaSignOutAlt style={{ marginTop: "6px" }} />
+              </button>
+            </Link>{" "}
+          </div>
+          <Datetime></Datetime>
+
+          <span>
+            <h2> Questions</h2>
+          </span>
+          <div className=" header-top">
+            <label className="search ">Search By Topic Name: </label>
+            <input
+              type="text"
+              placeholder="Enter Topic Name"
+              value={searchTopic}
+              onChange={(e) => setSearchTopic(e.target.value)}
+              className="search-input"
+            />
+
+            <button onClick={openModal} className="btton">
+              <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
             </button>
-          </Link>{" "}
-        </span>
-
-        <button onClick={openModal} className="btun">
-          Add Questions
-        </button>
-        <div className="search-container">
-          <label className="search ">Search By Topic Name: </label>
-          <input
-            type="text"
-            placeholder="Enter Topic Name"
-            value={searchTopic}
-            onChange={(e) => setSearchTopic(e.target.value)}
-            className="search-input"
-          />
-          <label className="search search-label ">Search By Ques Type: </label>
-
-          <input
-            type="text"
-            placeholder="Enter Question Type"
-            value={searchQuesType}
-            onChange={(e) => setSearchQuesType(e.target.value)}
-            className="search-input"
-          />
+          </div>
         </div>
+        <br />
+        <br /> <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         {loading && <p className="load">Loading Please Wait...</p>}
         <table className="table table-striped">
           <thead>
             <tr>
+              <th> S.NO</th>
+
               <th> Topic</th>
-              <th>QuesType</th>
               <th>Question Description</th>
               <th> A</th>
               <th>B</th>
@@ -840,10 +851,11 @@ export default function GetData() {
             </tr>
           </thead>
           <tbody>
-            {myData.map((row) => (
+            {myData.map((row, index) => (
               <tr key={row.ques_ID}>
+                <td>{index + 1}</td>
+
                 <td>{row.topic_Name}</td>
-                <td>{row.quesType_Label}</td>
                 <td>{row.ques_Desc}</td>
                 <td>{row.opt_A}</td>
                 <td>{row.opt_B}</td>
@@ -873,21 +885,26 @@ export default function GetData() {
               </tr>
             ))}
           </tbody>
+          <Footer></Footer>{" "}
         </table>
         {/* modal form add */}
-        <div className="modal-content">
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          className="modal-seet scroll"
+        >
+          <div className="modal-scroll">
             <fieldset>
-              <h1 className="h1">Knowledge Test Quiz</h1>
-              <br />
+              <center>
+                <h1 className="labell">Add Question</h1>
+              </center>
               <div className="drop">
-                <label htmlFor=""> Select Topic: </label>
+                <label htmlFor="" className="labell">
+                  {" "}
+                  Select Topic:{" "}
+                </label>
 
                 <Select
                   options={options}
@@ -900,7 +917,10 @@ export default function GetData() {
               </div>
               <br />
               <div className="drop">
-                <label htmlFor=""> Select Typee:</label>
+                <label htmlFor="" className="labell">
+                  {" "}
+                  Select Typee:
+                </label>
                 <Select
                   options={option}
                   placeholder="Select Type"
@@ -911,7 +931,7 @@ export default function GetData() {
                 />
               </div>
               <br />
-              <h3>Question Description : </h3>
+              <h3 className="labell">Question Description : </h3>
               <input
                 type="text"
                 className="margin  "
@@ -920,7 +940,7 @@ export default function GetData() {
                 value={inputValues.ques_Desc}
                 onChange={handleData}
               />{" "}
-              <h3>Answer Option</h3>
+              <h3 className="labell">Answer Option</h3>
               {selectedOption.value === "mcq" && (
                 <div>
                   <input type="text " className="short" placeholder="A" />
@@ -986,7 +1006,9 @@ export default function GetData() {
                   <input type="text" placeholder="Your answer" />
                 </div>
               )}
-              <label htmlFor="">Correct Answer: </label>
+              <label htmlFor="" className="labell">
+                Correct Answer:{" "}
+              </label>
               <input
                 type="text"
                 className="margin  "
@@ -995,7 +1017,10 @@ export default function GetData() {
                 value={inputValues.correct_Answer}
                 onChange={handleData}
               />
-              <label htmlFor=""> Remarks: </label>
+              <label htmlFor="" className="labell">
+                {" "}
+                Remarks:{" "}
+              </label>
               <input
                 type="text"
                 className="margin  "
@@ -1024,20 +1049,23 @@ export default function GetData() {
                 </center>
               </span>
             </fieldset>
-          </Modal>
-
-          {/* edit modal form */}
-
-          <Modal
-            isOpen={modalsIsOpen}
-            onAfterOpen={afterOpenModals}
-            onRequestClose={closeModals}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <form onSubmit={handleFormSubmit}>
+          </div>
+        </Modal>
+        {/* edit modal form */}
+        <Modal
+          isOpen={modalsIsOpen}
+          onAfterOpen={afterOpenModals}
+          onRequestClose={closeModals}
+          style={customStyles}
+          className="modal-seet scroll"
+          contentLabel="Example Modal"
+        >
+          <form onSubmit={handleFormSubmit}>
+            <div className="modal-scroll">
               <fieldset>
-                <h1 className="h1">Knowledge Test Quiz</h1>
+                <center>
+                  <h1>Edit Question</h1>
+                </center>
                 <br />
                 <div className="drop">
                   <label htmlFor=""> Select Topic: </label>
@@ -1172,9 +1200,9 @@ export default function GetData() {
                   </button>
                 </span>
               </fieldset>
-            </form>
-          </Modal>
-        </div>
+            </div>
+          </form>
+        </Modal>
       </div>
     </>
   );

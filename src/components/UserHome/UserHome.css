@@ -1,6 +1,5 @@
+/* 
 
-
-/* Main container */
 .user-home-container {
   display: flex;
   flex-direction: column;
@@ -24,7 +23,6 @@ h4 {
   color: black;
 }
 
-/* Form groups styling */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -41,7 +39,6 @@ input {
   width: 600px;
 }
 
-/* Add responsiveness */
 @media (max-width: 768px) {
   .user-details-form {
     padding: 15px;
@@ -76,4 +73,58 @@ width: 100%;
 .error{
   font-size: 25px;
   margin-top: -20px;
+} */
+
+/* styles.css */
+.score-results {
+  padding: 20px;
+  color: black;
+  background: #2a3447;
+  border: 1px solid black
+  ;
+  margin-top: 20px;
+  margin-right: 450px;
+  border-radius: 20px;
+  margin-left: 110px;
+}
+
+.score-results h2 {
+  margin-bottom: 10px;
+}
+
+.score-results ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.score-results li {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.score{
+font-size: 50px;
+margin-left: 70px;
+color: rgb(250, 223, 115); 
+font-weight: bold;
+font-family: monospace;
+}
+
+.answer{
+  font-size: 29px;
+  margin-left: 170px;
+
+  color: white;
+  margin-bottom: 20px;
+}
+
+.correctt{
+  color: rgb(73, 223, 73);
+}
+
+.question{
+  color: rgb(90, 209, 245);
+}
+.user-name{
+color: rgb(242, 126, 165);
 }

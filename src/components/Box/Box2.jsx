@@ -25,11 +25,10 @@ export default function Box1() {
             </center>
           </div>
         </div>{" "}
-        <Link to="/"></Link>
+        <br />
         <div className="chartInfo"></div>
         <center>
           <GrCompliance className="icons"></GrCompliance>
-
           <span className="dataa">{myData}</span>
         </center>
       </Link>

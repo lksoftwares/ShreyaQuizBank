@@ -1,4 +1,4 @@
-.homee{
+/* .homee{
   display: grid;
 grid-template-columns:  repeat(4, 1fr);
 grid-auto-rows: minmax(180px, auto);
@@ -18,24 +18,109 @@ grid-auto-rows: minmax(180px, auto);
 
 .box2{
   background-color: rgb(196, 22, 196);
-  grid-row: span 2; /* Makes the box span across all 3 columns */
-height: 310px;
 
-  }
-  .box3{
-    background-color: rgb(224, 43, 140);
-  }
+}
 
-  .box4{
-    background-color: rgb(72, 197, 228);
+  .box1{
+    background-color: rgb(40, 179, 165);
   }
 .box5{
   background-color: rgb(245, 98, 98);
-  margin-left: 50px;
 }
  
   .box6{
 background-color: rgb(35, 183, 138);
-margin-left: 50px;
+
+  } */
+
+  /* .homee {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 10px; 
+  }
+  
+  .boxx {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 320px;
+    height: 130px;
+  }
+  
+  .box1 {
+    background-color: rgb(40, 179, 165);
+    grid-column: span 1; 
+  }
+  
+  .box2 {
+    background-color: rgb(196, 22, 196);
+    grid-column: span 2; 
+    grid-row: 1; 
+  }
+  
+  .box5 {
+    background-color: rgb(245, 98, 98);
+  }
+  
+  .box6 {
+    background-color: rgb(35, 183, 138);
+    grid-column: 1 / 3;   grid-row: 1; 
+  }
+   */
+
+   .homee {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Defines four equal columns */
+    grid-auto-rows: minmax(180px, auto); /* Minimum height for rows */
+    gap: 10px; /* Adds space between grid items */
+  }
+  
+  .boxx {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 320px; /* Ensure the box takes the full width of its grid column */
+    height: 130px; /* Fixed height for consistency */
+  }
+  
+  .box1 {
+    background-color: rgb(61, 168, 36);
+    grid-column: span 1; /* Span one column */
+    margin-left: -160px;
 
   }
+  
+  .box2 {
+    background-color: rgb(196, 22, 196);
+    grid-column: span 2; /* Span two columns */
+    grid-row: 2; /* Place in the second row */
+    margin-left: 80px;
+  }
+  
+  .box5 {
+    background-color: rgb(245, 98, 98);
+    grid-column: 1 / 3; /* Span across the first two columns */
+    grid-row: 1; /* Place in the first row */
+    margin-left: 80px;
+
+
+  }
+  
+  .box6 {
+    background-color: rgb(35, 183, 138);
+    grid-column: span 1; /* Span one column */
+    margin-left: -160px;
+
+  }
+  
+
+  @media  (max-width: 480px) {
+    .box6, .box1{
+      margin-left: 80px;
+      grid-column: 1 / 3; /* Span across the first two columns */
+    }
+  } 
+
+
+  

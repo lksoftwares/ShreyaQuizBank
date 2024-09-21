@@ -39,7 +39,7 @@ import "./Menu.css";
 import React from "react";
 import { Link } from "react-router-dom";
 import Image from "../image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoHome } from "react-icons/io5";
 import { BsQuestionSquareFill } from "react-icons/bs";
 import { MdSystemSecurityUpdateGood } from "react-icons/md";
@@ -59,13 +59,36 @@ const Menu = () => {
     const data = await apiService.get(`Menues/getallMenues?Role_ID=${role_ID}`);
     setMenu(data);
   };
-  fetchMenu();
+  useEffect(() => {
+    fetchMenu();
+  });
+
+  const [userDetails, setUserDetails] = useState(null);
+  const user_ID = localStorage.getItem("ID");
+
+  const fetchUserDetailsById = async () => {
+    const response = await apiService.get(`Users/AllUsers?User_ID=${user_ID}`);
+    if (response.usersLists && response.usersLists.length > 0) {
+      setUserDetails(response.usersLists[0]);
+    }
+  };
+
+  useEffect(() => {
+    if (user_ID) {
+      fetchUserDetailsById();
+    }
+  }, []);
   return (
     <div className="menuu">
       <center>
         <Image></Image>
-
-        <h1 className="headings">Lk Softwares</h1>
+        {userDetails && (
+          <h1 className="headings">
+            {" "}
+            Welcome <br />
+            {userDetails.user_Name}
+          </h1>
+        )}
       </center>
       <div>
         {menu.map((item, menu_id) => (

@@ -5,9 +5,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
+import { FaSignOutAlt } from "react-icons/fa";
+
 import Button from "react-bootstrap/Button";
 import apiService from "../../../api";
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer";
+import { IoMdAddCircle } from "react-icons/io";
+
+import Datetime from "../datetime";
 
 const customStyles = {
   content: {
@@ -106,46 +112,65 @@ export default function GetTopic() {
       <div>
         <ToastContainer />
         <div className="card-body">
-          <span>
-            <h2>Topics</h2>
-            <Link to="/">
-              <button
-                className=" logout-btn"
-                onClick={() => {
-                  localStorage.clear();
-                  toast.info("Logged out successfully!");
-                }}
-              >
-                Logout
-              </button>
-            </Link>
-          </span>
-          <button onClick={() => setIsOpen(true)} className="btun">
-            Add Topic
-          </button>
+          <div className="header-container">
+            <div>
+              <Link to="/">
+                <button
+                  className=" logout-btn"
+                  onClick={() => {
+                    localStorage.clear();
+                    toast.info("Logged out successfully!");
+                  }}
+                >
+                  <FaSignOutAlt style={{ marginTop: "6px" }} />
+                </button>
+              </Link>
+            </div>
 
-          <label className="search">Search Topics: </label>
-          <input
-            type="text"
-            placeholder="Search Topics"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="search-input"
-          />
+            <Datetime></Datetime>
+
+            <span>
+              <h2>Topics</h2>
+            </span>
+            <div className="header-top">
+              <label className="search">Search Topics: </label>
+              <input
+                type="text"
+                placeholder="Search Topics"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+              <button onClick={() => setIsOpen(true)} className="btun">
+                <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
+              </button>
+            </div>
+          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
 
           {loading && <p className="load">Loading Please Wait...</p>}
 
           <table className="table table-striped">
             <thead>
               <tr>
+                <th>S.NO</th>
                 <th>Topic Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {filteredTopics.map((row) => (
+              {filteredTopics.map((row, index) => (
                 <tr key={row.topic_ID}>
+                  <td>{index + 1}</td>
+
                   <td>{row.topic_Name}</td>
                   <td>
                     <center>
@@ -166,6 +191,7 @@ export default function GetTopic() {
                 </tr>
               ))}
             </tbody>
+            <Footer></Footer>{" "}
           </table>
         </div>
 

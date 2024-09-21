@@ -2,6 +2,7 @@
   font-size: 28px;
   font-weight: 700;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 0px;
 }
 .headinggs{
   font-size: 26px;
@@ -53,4 +54,16 @@ margin-top: 10px;}
   font-size: 26px;
   text-align: center;
   margin-top: 0px !important;
+}
+.topicsContainer {
+  display: flex;
+  justify-content: space-between; /* Distribute evenly */
+  gap: 10px; /* Optional: adjust the spacing between topics */
+}
+
+.listt {
+  display: flex;
+  align-items: center; /* Center the text and icon vertically */
+  white-space: nowrap; /* Prevent wrapping of the text */
+  font-size: 18px;
 }

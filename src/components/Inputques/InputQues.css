@@ -7,12 +7,14 @@
 
 fieldset {
   display: flex;
-  width: 700px;
-  border: 1px solid #000000;
+  width: 690px;
+  margin-top: 30px;
   border-radius: 4px;
   flex-direction: column;
-  border-top: 70px solid rgb(28, 28, 158);
   padding-left: 30px;
+  
+  border: none;
+  background-color: #2a3447;
 
 }
 
@@ -44,7 +46,7 @@ p{
 input {
   border-radius: 4px;
   border: 1px solid #000000;
-  height: 44px;
+  height: 24px;
   width: 650px;
   margin-bottom: 15px;
   padding-left: 7px;

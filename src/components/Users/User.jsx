@@ -8,8 +8,18 @@ import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
+import { RiUserSettingsFill } from "react-icons/ri";
 import apiService from "../../../api";
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer";
+import Datetime from "../datetime";
+import { ImCheckmark } from "react-icons/im";
+import { IoMdAddCircle } from "react-icons/io";
+import { FaSignOutAlt } from "react-icons/fa";
+
+import { ImCross } from "react-icons/im";
+import { FaUserAlt } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
 const customStyles = {
   content: {
     right: "auto",
@@ -193,53 +203,97 @@ export default function User() {
       <div>
         <ToastContainer />
         <div className="card-body">
-          <span>
-            <h2>Users</h2>
-            <Link to="/">
-              <button
-                className=" logout-btn"
-                onClick={() => {
-                  localStorage.clear();
-                  toast.info("Logged out successfully!");
-                }}
-              >
-                Logout
+          <div className="header-container user-head">
+            <div>
+              {" "}
+              <Link to="/">
+                <button
+                  className=" logout-btn"
+                  onClick={() => {
+                    localStorage.clear();
+                    toast.info("Logged out successfully!");
+                  }}
+                >
+                  <FaSignOutAlt style={{ marginTop: "6px" }} />
+                </button>
+              </Link>
+            </div>
+            <Datetime></Datetime>
+            <span>
+              <h2>Users</h2>
+            </span>{" "}
+            <div className="header-top">
+              <label className="search">Search Users: </label>
+              <input
+                type="text"
+                placeholder="Search by Username, Email, or Role"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+                className="search-input"
+              />
+              <button onClick={() => setIsOpen(true)} className="btun">
+                <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
               </button>
-            </Link>
-          </span>
-          <button onClick={() => setIsOpen(true)} className="btun">
-            Add Users
-          </button>
+            </div>
+          </div>
 
-          {/* Search Input */}
-          <label className="search">Search Users: </label>
-          <input
-            type="text"
-            placeholder="Search by Username, Email, or Role"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
-            className="search-input"
-          />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           {loading && <p className="load">Loading Please Wait...</p>}
-
           <table className="table table-striped">
             <thead>
               <tr>
+                <th>S.NO</th>
+
                 <th>UserName</th>
                 <th>Email</th>
+                <th>Role</th>
+
                 <th>Status</th>
-                <th>UserRole</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row) => (
+              {filteredData.map((row, index) => (
                 <tr key={row.user_ID}>
+                  <td>{index + 1}</td>
+
                   <td>{row.user_Name}</td>
                   <td>{row.user_Email}</td>
-                  <td>{row.status === 1 ? "Active" : "Deactive"}</td>
-                  <td>{row.userRole}</td>
+                  {/* <td>{row.userRole}</td> */}
+                  {/* <td>
+                    {row.userRole === "User" ? (
+                      <FaUserAlt style={{ color: "green", fontSize: "20px" }} />
+                    ) : (
+                      <RiAdminFill style={{ color: "red", fontSize: "20px" }} />
+                    )
+                    
+                    }
+                  </td> */}
+                  <td>
+                    {row.userRole === "User" && (
+                      <FaUserAlt style={{ color: "red", fontSize: "20px" }} />
+                    )}
+                    {row.userRole === "Admin" && (
+                      <FaUserAlt style={{ color: "green", fontSize: "20px" }} />
+                    )}
+                  </td>
+                  <td>
+                    {row.status === 1 ? (
+                      <ImCheckmark
+                        style={{ color: "green", fontSize: "20px" }}
+                      />
+                    ) : (
+                      <ImCross style={{ color: "red", fontSize: "20px" }} />
+                    )}
+                  </td>
                   <td>
                     <center>
                       <BsPencilSquare
@@ -259,8 +313,9 @@ export default function User() {
                 </tr>
               ))}
             </tbody>
+            <Footer></Footer>{" "}
           </table>
-        </div>
+        </div>{" "}
         <Modal
           isOpen={modalsIsOpen}
           onRequestClose={closeModals}
@@ -339,7 +394,6 @@ export default function User() {
             </button>
           </form>
         </Modal>
-
         {/* add modal */}
         <Modal
           isOpen={modalIsOpen}

@@ -22,8 +22,7 @@ export default function Box6() {
           </center>
         </div>
       </div>{" "}
-      <Link to="/"></Link>
-      <div className="chartInfo"></div>
+      <br /> <div className="chartInfo"></div>
       <center>
         <PiUsersFill className="icons"></PiUsersFill>
 

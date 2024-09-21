@@ -1,42 +1,54 @@
 .navb{
-  background-color: #2a3447;
   height: 45px;
   margin-bottom: 20px;
   color: white;
-  padding-top: 5px;
+  padding-top: 5x;
   padding-bottom: 15px;
-
 }
 .clr{
 color: white;
-  font-size: 40px;
+  font-size: 35px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
+  margin-left: 150px;
 }
-.lk{
-  margin-top: 202px;
-  height: 40px;
-  width: 1220px;
-  border: 1px solid black;
-}
+
 .btnnn{
 background-color: red;  color: white;
   border-radius: 10px;
-  width: 100px;
+  width: 60px;
   height: 40px;
   padding: 0px;
-  margin-right: 50px;
-  font-size: 20px;
+  font-size: 25px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   float: right;
-margin-left: 390px;
 margin-top: 10px !important;
+margin-right: 25px;
 }
 .btnn :hover{
   background-color: blue;
 }
 
-.date{
-  font-size: 25px;
-  float: left;
+
+.dat{
+  float: left !important;
+  margin-top: 10px;
+  font-size: 24px;
 }
+.datee{
+  margin-top: 5px;
+  font-size: 24px;
+}
+.fixed{
+  position: fixed;
+  background-color: #2a3447;
+  height: 45px;
+  margin-bottom: 20px;
+  width: 1250px;
+
+  color: white;
+  padding-top: 5px;
+  padding-bottom: 15px;  margin-top: -15px !important;
+}
+
+

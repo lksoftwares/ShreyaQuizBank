@@ -8,35 +8,32 @@ import Box2 from "../components/Box/Box2";
 import Box5 from "../components/Box/Box5";
 import Box6 from "../components/Box/Box6";
 import UpcomingQuiz from "../components/UpcomingQuiz/UpcomingQuiz";
-
+import Footer from "../components/footer/footer";
+import Sidebar from "../components/Sidebar/Sidebar";
 function Home() {
   return (
     <div>
       <Navbar></Navbar>
+
       <UpcomingQuiz></UpcomingQuiz>
+      <Sidebar></Sidebar>
+
       <div className="homee">
         <div className="boxx box5 ">
           <Box5 />
         </div>
-        {/* <div className="boxx box1 ">
-          <Box4 />
-        </div> */}
-        <div className="boxx box3">
-          <Box2 />
-        </div>
-        <div className="boxx box2 ">
-          <Box1 />
-        </div>
-        <br />
-
-        {/* <div className="boxx box4">
-          <Box3 />
-        </div>{" "} */}
         <div className="boxx box6">
           <Box6 />
+        </div>{" "}
+        <div className="boxx box2">
+          <Box2 />
         </div>
+        <br />
+        <div className="boxx box1 ">
+          <Box1 />
+        </div>{" "}
       </div>
-      <img src="/src/images/header.jpg" alt="" className="lk" />
+      <Footer></Footer>
     </div>
   );
 }

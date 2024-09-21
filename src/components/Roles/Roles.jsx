@@ -7,8 +7,14 @@ import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import Button from "react-bootstrap/Button";
+import Datetime from "../datetime";
+import { FaSignOutAlt } from "react-icons/fa";
+
+import { IoMdAddCircle } from "react-icons/io";
+
 import apiService from "../../../api";
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer";
 
 const customStyles = {
   content: {
@@ -29,6 +35,7 @@ const customStyles = {
 export default function Roles() {
   const token = localStorage.getItem("token");
   const url = import.meta.env.VITE_BASE_URL;
+
   const [myData, setmyData] = useState([]);
   const [inputValues, setInputValues] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -113,43 +120,62 @@ export default function Roles() {
       <div>
         <ToastContainer />
         <div className="card-body">
-          <span>
-            <h2>Roles</h2>
-            <Link to="/">
-              <button
-                className=" logout-btn"
-                onClick={() => {
-                  localStorage.clear();
-                  toast.info("Logged out successfully!");
-                }}
-              >
-                Logout
+          <div className="header-container">
+            <div>
+              <Link to="/">
+                <button
+                  className=" logout-btn"
+                  onClick={() => {
+                    localStorage.clear();
+                    toast.info("Logged out successfully!");
+                  }}
+                >
+                  <FaSignOutAlt style={{ marginTop: "6px" }} />
+                </button>
+              </Link>
+            </div>
+            <Datetime></Datetime>
+            <span>
+              <h2>Roles</h2>
+            </span>
+            <div className=" header-top">
+              <label className="search">Search Roles: </label>
+              <input
+                type="text"
+                placeholder="Search by Role Name"
+                value={searchQuery}
+                onChange={handleSearch}
+                className="search-input"
+              />
+              <button onClick={handleShow} className="btun">
+                <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
               </button>
-            </Link>
-            <button onClick={handleShow} className="btun">
-              Add Roles
-            </button>
-          </span>
-          <label className="search">Search Roles: </label>
-          <input
-            type="text"
-            placeholder="Search by Role Name"
-            value={searchQuery}
-            onChange={handleSearch}
-            className="search-input"
-          />
+            </div>
+          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           {loading && <p className="load">Loading Please Wait...</p>}
           <table className="table table-striped">
             <thead>
               <tr>
+                <th>S.NO</th>
+
                 <th>Role Name</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {myData.map((row) => (
+              {myData.map((row, index) => (
                 <tr key={row.role_ID}>
+                  <td>{index + 1}</td>
+
                   <td>{row.roleName}</td>
                   <td>
                     <center>
@@ -170,6 +196,7 @@ export default function Roles() {
                 </tr>
               ))}
             </tbody>
+            <Footer></Footer>{" "}
           </table>
         </div>
 

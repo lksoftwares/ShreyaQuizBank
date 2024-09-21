@@ -2,18 +2,18 @@
 .marquee-container {
   width: 100%; /* Container width */
   overflow: hidden; /* Hide overflow */
-  position: relative; /* For positioning child elements */
   margin-bottom: 30px;
-  font-size: 27px;
+  font-size: 25px;
   font-weight: bold;
   
 }
 
 .marquee-content {
+
   display: inline-block;
   white-space: nowrap; /* Prevent text from wrapping */
   animation: marquee 10s linear infinite; /* Animation properties */
-  color: black;
+  color: red;
 }
 
 @keyframes marquee {

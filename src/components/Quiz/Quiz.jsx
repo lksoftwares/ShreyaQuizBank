@@ -461,6 +461,8 @@
 
 // export default Quiz;
 import { ToastContainer, toast } from "react-toastify";
+import { FaSignOutAlt } from "react-icons/fa";
+
 import "react-toastify/dist/ReactToastify.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -468,6 +470,8 @@ import "../Quiz/Quiz.css";
 import Select from "react-select";
 import apiService from "../../../api";
 import { Link } from "react-router-dom";
+import Footer from "../footer/footer";
+import Datetime from "../datetime";
 
 function Quiz() {
   const url = import.meta.env.VITE_BASE_URL;
@@ -484,7 +488,6 @@ function Quiz() {
   const [filteredData, setFilteredData] = useState([]);
   const [date, setDate] = useState("");
   const [checkedQues, setCheckedQues] = useState([]);
-
   const fetchData = async (topics = []) => {
     setLoading(true);
     const topicNames = topics.map((topic) => topic.label).join(",");
@@ -616,60 +619,79 @@ function Quiz() {
   return (
     <div>
       <ToastContainer />
-      <h2 className="top">Quiz Transactions</h2>
-      <Link to="/">
-        <button
-          className=" logout-btn"
-          onClick={() => {
-            localStorage.clear();
-            toast.info("Logged out successfully!");
-          }}
-        >
-          Logout
-        </button>
-      </Link>
-      <div className="input-wrapper">
-        <label className="users ">Select Date:</label>
-        <input
-          type="datetime-local"
-          className="input-cont"
-          value={date}
-          onChange={handleDateChange}
-        />
-        <label className="users marginn">Time in Min:</label>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          className="input-cont"
-          placeholder="Enter Time"
-        />
-      </div>
+      <div className="header-container">
+        <div>
+          {" "}
+          <Link to="/">
+            <button
+              className=" logout-btn"
+              onClick={() => {
+                localStorage.clear();
+                toast.info("Logged out successfully!");
+              }}
+            >
+              <FaSignOutAlt style={{ marginTop: "6px" }} />
+            </button>
+          </Link>
+        </div>
+        <Datetime></Datetime>
 
-      <div className="input-wrapper">
-        <label className="users">Select Topic:</label>
-        <Select
-          isMulti
-          value={selectedTopics}
-          onChange={handleTopicChange}
-          className=" input-cont dropdown-cont"
-          options={topics}
-          placeholder="Select Topics"
-        />
-        <label className="users marginn">Select User: </label>
-        <Select
-          isMulti
-          value={selectedOptions}
-          className="input-cont dropdown-cont"
-          onChange={handleChange}
-          options={options}
-          placeholder="Select User"
-        />
-      </div>
+        <h2 className="top">Quiz Transactions</h2>
 
+        <div className="input-wrapper">
+          <label className="users ">Select Date:</label>
+          <input
+            type="datetime-local"
+            className="input-cont"
+            value={date}
+            onChange={handleDateChange}
+          />
+          <label className="users marginn">Time in Min:</label>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            className="input-cont"
+            placeholder="Enter Time"
+          />
+        </div>
+
+        <div className="input-wrapper">
+          <label className="users">Select Topic:</label>
+          <Select
+            isMulti
+            value={selectedTopics}
+            onChange={handleTopicChange}
+            className=" input-cont dropdown-cont"
+            options={topics}
+            placeholder="Select Topics"
+          />
+          <label className="users marginn">Select User: </label>
+          <Select
+            isMulti
+            value={selectedOptions}
+            className="input-cont dropdown-cont"
+            onChange={handleChange}
+            options={options}
+            placeholder="Select User"
+          />
+        </div>
+      </div>
+      <br />
+      <br /> <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       {loading && <p className="load">Loading Please Wait...</p>}
       {error && <p>Error: {error}</p>}
-
       <table className="table table-striped">
         <thead>
           <tr>
@@ -699,8 +721,8 @@ function Quiz() {
             </tr>
           )}
         </tbody>
+        <Footer></Footer>{" "}
       </table>
-
       <button onClick={saveQuestions} className="bg-blue-700 py-3 mt-3 text-md">
         Submit
       </button>

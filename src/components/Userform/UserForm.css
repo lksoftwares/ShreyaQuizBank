@@ -185,8 +185,8 @@ button:hover{
 }
 .user{
 
-  margin-top: 1px;
   width: 1262px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 34px;
+  padding-top: 25px;
 }

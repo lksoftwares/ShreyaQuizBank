@@ -3,11 +3,30 @@ h2{
   margin-bottom: 30px;
   font-size: 30px;
   background-color:#2a3447;
-margin-top: -18px;
+margin-top: -27px;
 margin-bottom: 40px;
-padding-top: 15px;
+padding-top: 16px;
 padding-bottom: 15px;
+width: 1255px;
+
 }
+.modal-seet {
+  margin-top: 400px; /* You had two margin-top declarations, removed the first */
+  margin-left: 1000px;
+  padding: 15px 30px 25px 30px; /* Combined padding into one line */
+  display: flex;
+  width: 1200px;
+  border-radius: 4px;
+  flex-direction: column;
+  border: none;
+  max-height: 500px; /* Set a maximum height for the modal */
+}
+.scroll{
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+
 .load{
   font-size: 30px;
   color: black;
@@ -19,7 +38,7 @@ padding-bottom: 15px;
     color: rgb(59, 240, 59);
   }
 
-  
+
   
 table {
   border-collapse: collapse;
@@ -66,22 +85,28 @@ button{
 .button2{
   background-color: rgb(40, 187, 40);
 }
-
+.field{
+  border: 2px solid black;
+}
 .btun{
-width: 200px;
-float: right;
+width: 70px;
+height: 50px;
+font-size: 18px;
 margin-bottom: 15px;
-margin-top: -10px;
 background-color: #2a3447;
+margin-left: 700px;
 }
 .modal-content{
   position: relative;
     display: flex;
+    border: 2px solid black;
     flex-direction: column;
+    margin-top: 100px;
+
     width: 100%;
 }
 .search-label{
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .fonts
 {
@@ -119,9 +144,11 @@ margin-left: 300px;
   width: 200px;
   height: 45px;
   margin-top:5px;
-
-
 }
+  .labell{
+    color: black;
+  }
+
 .margin{
   margin-top: 5px;
 }
@@ -132,4 +159,21 @@ margin-left: 300px;
     margin-left: 60px;
   }
   
+.field{
+  background-color: #2a3447;
 
+}
+.header-top{
+  margin-top: -20px;
+}
+
+.btton{
+  width: 70px;
+  margin-bottom: 15px;
+  background-color: #2a3447;
+  margin-left: 630px;
+  }
+
+
+
+  
