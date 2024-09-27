@@ -10,19 +10,9 @@ padding-bottom: 15px;
 width: 1255px;
 
 }
-.modal-seet {
-  margin-top: 400px; /* You had two margin-top declarations, removed the first */
-  margin-left: 1000px;
-  padding: 15px 30px 25px 30px; /* Combined padding into one line */
-  display: flex;
-  width: 1200px;
-  border-radius: 4px;
-  flex-direction: column;
-  border: none;
-  max-height: 500px; /* Set a maximum height for the modal */
-}
-.scroll{
-  overflow-y: auto; /* Enable vertical scrolling */
+
+.fix{
+  position: fixed;
 }
 
 
@@ -38,7 +28,9 @@ width: 1255px;
     color: rgb(59, 240, 59);
   }
 
-
+.role{
+  margin-left: -50px !important;
+}
   
 table {
   border-collapse: collapse;
@@ -61,7 +53,10 @@ th, td {
   font-weight: bold;
 
 }
-
+.pagination{
+  float: right;
+  margin-left: 0px !important;
+}
 
 th {
   background-color:#2a3447;
@@ -141,7 +136,7 @@ margin-left: 300px;
 }
 
 .small{
-  width: 200px;
+  width: 190px;
   height: 45px;
   margin-top:5px;
 }
@@ -175,5 +170,36 @@ margin-left: 300px;
   }
 
 
+
+  .modal-scroll {
+    max-height: 500px; /* Set a max height for the scrollable area */
+    overflow-x: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* Thin scrollbar for Firefox */
+    scrollbar-color: #888 #f1f1f1; /* Thumb color and track color for Firefox */
+  }
+  
+  /* For WebKit browsers (Chrome, Safari) */
+  .modal-scroll::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar */
+  }
+  
+  .modal-scroll::-webkit-scrollbar-track {
+    background: black; /* Background of the scrollbar track */
+  }
+  
+  .modal-scroll::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar handle */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  .modal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scrollbar handle on hover */
+  }
+  
+  .modal-seet{
+    margin-left: 800px;
+    margin-top: 400px;
+    width: 750px;
+  }
 
   

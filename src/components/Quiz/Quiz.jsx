@@ -558,6 +558,11 @@ function Quiz() {
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
+  const [inputValues, setInputValues] = useState("");
+
+  const handleInputsChange = (event) => {
+    setInputValues(event.target.value);
+  };
 
   const saveQuestions = async () => {
     if (selectedQues.length === 0) {
@@ -572,6 +577,7 @@ function Quiz() {
         Quiz_Date: date,
         User_ID: userId,
         Allowed_Time: inputValue,
+        quiz_Name: inputValues,
       }))
     );
 
@@ -675,6 +681,14 @@ function Quiz() {
             options={options}
             placeholder="Select User"
           />
+          <label className="users marginn">Quiz Name:</label>
+          <input
+            type="text"
+            value={inputValues}
+            onChange={handleInputsChange}
+            className="input-cont"
+            placeholder="Enter Time"
+          />
         </div>
       </div>
       <br />
@@ -690,7 +704,7 @@ function Quiz() {
       <br />
       <br />
       <br />
-      {loading && <p className="load">Loading Please Wait...</p>}
+      {loading && <div className="loading-circle"></div>}
       {error && <p>Error: {error}</p>}
       <table className="table table-striped">
         <thead>

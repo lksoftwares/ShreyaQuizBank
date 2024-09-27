@@ -52,15 +52,52 @@
 //     </div>
 //   );
 // }
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./image.css";
 import apiService from "../../api";
 import { toast } from "react-toastify";
-
+import axios from "axios";
 export default function Image() {
   const [selectedImage, setSelectedImage] = useState(null);
   const url = import.meta.env.VITE_BASE_URL;
+  // const fetchData = async () => {
+  //   try {
+  const user_ID = localStorage.getItem("ID");
+  //     const token = localStorage.getItem("token");
 
+  //     const res = await axios({
+  //       method: "get",
+  //       url: `${url}Users/ProfileImage${user_ID}`,
+
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     console.log("res Image data", res.data);
+
+  //     console.log("Image", res.data.imageUrl);
+  //     // setSelectedImage(res.data.imageUrl);
+  //     console.log(selectedImage);
+  //   } catch (error) {
+  //     console.log("error occur", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // });
+
+  const fetchData = async () => {
+    const res = await apiService.get(`Users/ProfileImage/${user_ID}`);
+    console.log("res Image data", res.data);
+
+    console.log("Image", res.imageUrl);
+    setSelectedImage(res.imageUrl);
+    console.log(selectedImage);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
 
@@ -88,7 +125,7 @@ export default function Image() {
       toast.success(response);
       console.log(response.data);
     }
-
+    console.log("selectedImage", selectedImage);
     // Preview the selected image
     setSelectedImage(URL.createObjectURL(file));
   };
@@ -103,13 +140,13 @@ export default function Image() {
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-          {console.log("selectedImage", selectedImage)}
+          {/* {console.log("selectedImage", selectedImage)} */}
 
           <img
             src={
               selectedImage
-                ? `${url}/public/images/${selectedImage}`
-                : "http://192.168.1.56:7241/public/images/14c216ed-8929-4028-a66d-4259696e9838.png"
+                ? `${selectedImage}`
+                : `${url}/public/images/f903a142-a14c-46e1-b1aa-0e9520f7264d.png`
             }
             alt="preview"
             style={{

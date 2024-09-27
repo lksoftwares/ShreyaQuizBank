@@ -80,7 +80,10 @@ import Sidebar from "../Sidebar/Sidebar";
 import { FaUserCircle } from "react-icons/fa";
 import { MdAttachEmail } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
+import Box3 from "./Topuser";
 import { FaCircleQuestion } from "react-icons/fa6";
+import Best from "./Best";
+import Worst from "./Worst";
 function UserHome() {
   const user_ID = localStorage.getItem("ID");
   const [myData, setMyData] = useState({
@@ -102,17 +105,12 @@ function UserHome() {
   }, [user_ID]);
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const data = await apiService.get(
-        `Quiz_AnsTransaction/Result?User_ID=${user_ID}`
-      );
-      setMyData(data.scoreResult);
-      console.log("jkjkj", data.scoreResult.correctAnswer);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
+
+    const data = await apiService.get(
+      `Quiz_AnsTransaction/Result?User_ID=${user_ID}`
+    );
+    setMyData(data.scoreResult);
+    console.log("jkjkj", data.scoreResult.correctAnswer);
   };
 
   useEffect(() => {
@@ -123,25 +121,35 @@ function UserHome() {
       <Navbar />
       <UpcomingQuiz />
       <Sidebar />
-      <div className="score-results">
-        {loading && <p>Loading...</p>}
-        {!loading && myData.length === 0 && <p>No results available.</p>}
+      <div className="homeee">
+        {" "}
+        <div className="boxxx boxx3 ">
+          <Box3 />
+        </div>{" "}
+        <div className="boxxx best ">
+          <Best />
+        </div>{" "}
+        <div className="boxxx worst ">
+          <Worst />
+        </div>{" "}
+      </div>
 
+      <div className="score-results">
         <div>
           <p className="score">Your Score Results</p>
           <hr />
           <br />
-          <br />
           <p className="user-name answer">
             <FaUserCircle /> Name: {userDetails?.user_Name}
-          </p>
+          </p>{" "}
+          <br />
           <p className="answer">
             <MdAttachEmail /> Email: {userDetails?.user_Email}
           </p>
-          <p className=" correctt answer ">
+          <p className="correctt">
             <FaCheck /> Correct Answers: {myData.correctAnswer}
           </p>
-          <p className=" question answer">
+          <p className="answer question">
             <FaCircleQuestion /> Total Questions: {myData.totalQuestion}
           </p>
         </div>

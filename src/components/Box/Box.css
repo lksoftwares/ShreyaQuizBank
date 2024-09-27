@@ -12,6 +12,7 @@
 }
 .titl{
   margin-top: -103px !important;
+  margin-left: 150px !important;
 }
 .icons{
 font-size: 35px !important;
@@ -65,5 +66,9 @@ margin-top: 10px;}
   display: flex;
   align-items: center; /* Center the text and icon vertically */
   white-space: nowrap; /* Prevent wrapping of the text */
-  font-size: 18px;
+  font-size: 20px;
+}
+.topuser{
+  font-size: 19px;
+  font-weight: bold;
 }

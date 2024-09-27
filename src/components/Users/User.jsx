@@ -197,7 +197,12 @@ export default function User() {
     setIsOpen(false);
     fetchUsers();
   };
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Number of items to display per page
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = filteredData.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   return (
     <>
       <div>
@@ -245,7 +250,7 @@ export default function User() {
           <br />
           <br />
           <br />
-          {loading && <p className="load">Loading Please Wait...</p>}
+          {loading && <div className="loading-circle"></div>}
           <table className="table table-striped">
             <thead>
               <tr>
@@ -261,22 +266,11 @@ export default function User() {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((row, index) => (
+              {currentUsers.map((row, index) => (
                 <tr key={row.user_ID}>
-                  <td>{index + 1}</td>
-
+                  <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                   <td>{row.user_Name}</td>
                   <td>{row.user_Email}</td>
-                  {/* <td>{row.userRole}</td> */}
-                  {/* <td>
-                    {row.userRole === "User" ? (
-                      <FaUserAlt style={{ color: "green", fontSize: "20px" }} />
-                    ) : (
-                      <RiAdminFill style={{ color: "red", fontSize: "20px" }} />
-                    )
-                    
-                    }
-                  </td> */}
                   <td>
                     {row.userRole === "User" && (
                       <FaUserAlt style={{ color: "red", fontSize: "20px" }} />
@@ -315,6 +309,25 @@ export default function User() {
             </tbody>
             <Footer></Footer>{" "}
           </table>
+
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="pagination"
+            >
+              Previous
+            </button>
+            <span>{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>{" "}
         <Modal
           isOpen={modalsIsOpen}

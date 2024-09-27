@@ -52,16 +52,16 @@ import apiService from "../../../api";
 
 const Menu = () => {
   const role_ID = localStorage.getItem("Roleid");
-
   const [menu, setMenu] = useState([]);
 
   const fetchMenu = async () => {
     const data = await apiService.get(`Menues/getallMenues?Role_ID=${role_ID}`);
     setMenu(data);
   };
+
   useEffect(() => {
     fetchMenu();
-  });
+  }, [role_ID]); // Add dependency to avoid unnecessary calls
 
   const [userDetails, setUserDetails] = useState(null);
   const user_ID = localStorage.getItem("ID");
@@ -77,20 +77,20 @@ const Menu = () => {
     if (user_ID) {
       fetchUserDetailsById();
     }
-  }, []);
+  }, [user_ID]); // Add dependency to avoid unnecessary calls
+
   return (
     <div className="menuu">
       <center>
-        <Image></Image>
+        <Image />
         {userDetails && (
           <h1 className="headings">
-            {" "}
             Welcome <br />
-            {userDetails.user_Name}
+            <p className="headd">{userDetails.user_Name}</p>
           </h1>
         )}
       </center>
-      <div>
+      <div className="scrollableMenu">
         {menu.map((item, menu_id) => (
           <ul key={menu_id}>
             <Link className="menuuu" to={item.menu_URL}>
@@ -102,8 +102,7 @@ const Menu = () => {
               {menu_id === 5 && <MdSystemSecurityUpdateGood />}
               {menu_id === 6 && <RiAdminFill />}
               {menu_id === 7 && <BsClipboard2Data />}
-
-              <span className="  listItemTitlee ">{item.menu_Name}</span>
+              <span className="listItemTitlee">{item.menu_Name}</span>
             </Link>
           </ul>
         ))}
@@ -111,4 +110,5 @@ const Menu = () => {
     </div>
   );
 };
+
 export default Menu;

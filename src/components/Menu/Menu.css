@@ -28,7 +28,8 @@ margin-left: 30px;
   text-decoration: none;
   color: white; /* Dark grey color */
   margin: 10px 0;
-  
+  margin-left: 50px;
+
   padding: 10px 20px;
   border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -51,4 +52,49 @@ margin-left: 30px;
   margin: 0px;
   font-weight: bolder;
 
+}
+.menuu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 270px; /* Adjust as needed */
+
+}
+
+.scrollableMenu {
+  max-height: 400px; /* Set max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  width: 300px; /* Make it full width */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.scrollableMenu::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+.scrollableMenu::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+
+}
+
+.scrollableMenu::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar handle */
+  border-radius: 5px; /* Optional: rounded corners */
+
+}
+
+.scrollableMenu::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar handle on hover */
+}
+
+/* For Firefox */
+.scrollableMenu {
+  scrollbar-width: thin; /* Thin scrollbar */
+  
+  scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
+}
+.headd{
+  font-size: 40px;
+  color: white;  margin-bottom: 20px;
+  margin-bottom: 0px;
 }

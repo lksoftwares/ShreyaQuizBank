@@ -21,8 +21,6 @@ const request = async (method, endpoint, data = null) => {
     throw new Error(error.response?.data?.message || 'Something went wrong');
   }
 };
-
-
 //api request
 const get = async (endpoint) => {
   return await request('GET', endpoint);

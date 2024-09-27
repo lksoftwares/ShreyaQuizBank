@@ -85,7 +85,8 @@ width: 100%;
   margin-top: 20px;
   margin-right: 450px;
   border-radius: 20px;
-  margin-left: 110px;
+  width: 500px;
+  margin-left: 190px;
 }
 
 .score-results h2 {
@@ -103,23 +104,28 @@ width: 100%;
 }
 
 .score{
-font-size: 50px;
-margin-left: 70px;
+font-size: 40px;
+margin-left: 50px;
 color: rgb(250, 223, 115); 
 font-weight: bold;
 font-family: monospace;
 }
 
 .answer{
-  font-size: 29px;
-  margin-left: 170px;
-
-  color: white;
-  margin-bottom: 20px;
+  
+  display: inline-flex; /* Keep this consistent */
+  align-items: center; /* Vertically center the content */
+ font-size: 22px;
+ color: wheat;
 }
 
 .correctt{
   color: rgb(73, 223, 73);
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center; /* Vertically center the content */
+  font-size: 22px;
+
+  margin-right: 20px; /* Add some space between the elements */
 }
 
 .question{
@@ -127,4 +133,50 @@ font-family: monospace;
 }
 .user-name{
 color: rgb(242, 126, 165);
+margin-right: 12px;
+}
+.topuser{
+  font-size: 20px;
+  font-weight: bold;
+}
+.headingss{
+  font-size: 36px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 0px;
+  margin-bottom: 0px !important;
+
+}
+.boxx3 {
+  background-color: rgb(245, 98, 98);
+  grid-column: 1 / 3; /* Span across the first two columns */
+  margin-left: 70px;
+
+
+}
+.best {
+  background-color: rgb(51, 143, 200);
+  grid-column: 1 / 3; /* Span across the first two columns */
+  margin-left: 20px;
+}
+.worst {
+  background-color: rgb(199, 53, 165);
+  grid-column: 1 / 3; /* Span across the first two columns */
+  margin-left: 20px;
+
+
+}
+.boxxx {
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  width: 200px; /* Ensure the box takes the full width of its grid column */
+  height: 200px; /* Fixed height for consistency */
+  
+}
+.homeee {
+  display: flex;
+  grid-template-columns: repeat(4, 1fr); /* Defines four equal columns */
+  grid-auto-rows: minmax(180px, auto); /* Minimum height for rows */
+  gap: 10px; /* Adds space between grid items */
 }

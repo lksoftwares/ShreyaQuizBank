@@ -23,7 +23,7 @@
   right: 0; 
   height: 100vh; 
   margin-top: -89px;
-  width: 300px;
+  width: 270px;
   overflow-y: auto; 
   color: black;
   
@@ -55,6 +55,11 @@ margin-bottom: 10px;
 .all-dates li {
   padding: 10px 0;
   font-size: 18px;
-  margin-left: 20px;
+  margin-left: 10px;
   margin-bottom: 15px;
 }
+hr {  
+  height: 0.2px;  
+  background-color: black;  
+  border: none;  
+}  

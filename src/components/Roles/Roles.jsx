@@ -114,11 +114,20 @@ export default function Roles() {
     handleModalsClose();
     Data();
   };
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const indexOfLastQuestion = currentPage * itemsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - itemsPerPage;
+  const currentQuestions = myData.slice(
+    indexOfFirstQuestion,
+    indexOfLastQuestion
+  );
+  const totalPages = Math.ceil(myData.length / itemsPerPage);
   return (
     <>
       <div>
         <ToastContainer />
+
         <div className="card-body">
           <div className="header-container">
             <div>
@@ -134,10 +143,12 @@ export default function Roles() {
                 </button>
               </Link>
             </div>
-            <Datetime></Datetime>
             <span>
+              <Datetime></Datetime>
+
               <h2>Roles</h2>
             </span>
+
             <div className=" header-top">
               <label className="search">Search Roles: </label>
               <input
@@ -160,7 +171,8 @@ export default function Roles() {
           <br />
           <br />
           <br />
-          {loading && <p className="load">Loading Please Wait...</p>}
+          {loading && <div className="loading-circle"></div>}
+
           <table className="table table-striped">
             <thead>
               <tr>
@@ -172,9 +184,9 @@ export default function Roles() {
               </tr>
             </thead>
             <tbody>
-              {myData.map((row, index) => (
+              {currentQuestions.map((row, index) => (
                 <tr key={row.role_ID}>
-                  <td>{index + 1}</td>
+                  <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
 
                   <td>{row.roleName}</td>
                   <td>
@@ -198,6 +210,24 @@ export default function Roles() {
             </tbody>
             <Footer></Footer>{" "}
           </table>
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="pagination"
+            >
+              Previous
+            </button>
+            <span>{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
 
         {/* Edit Modal */}
