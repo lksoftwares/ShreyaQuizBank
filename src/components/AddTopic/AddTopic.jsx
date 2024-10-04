@@ -6,7 +6,8 @@
 // import { MdDelete } from "react-icons/md";
 // import Modal from "react-modal";
 // import { FaSignOutAlt } from "react-icons/fa";
-
+// import { GrLinkPrevious } from "react-icons/gr";
+// import { GrLinkNext } from "react-icons/gr";
 // import Button from "react-bootstrap/Button";
 // import apiService from "../../../api";
 // import { Link } from "react-router-dom";
@@ -41,6 +42,7 @@
 //   const [selectedRow, setSelectedRow] = useState(null);
 //   const [topics, setTopics] = useState([]);
 //   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
+//   const Role_ID = localStorage.getItem("Roleid");
 
 //   // Handle input change for search
 //   const handleSearchChange = (e) => {
@@ -79,6 +81,7 @@
 //     });
 //     toast.success(response);
 //     setIsOpen(false);
+//     setInputValues("");
 //     fetchData();
 //   };
 
@@ -93,9 +96,11 @@
 //   // Fetch all topics
 //   const fetchData = async () => {
 //     setLoading(true);
-//     const data = await apiService.get("Topic/AllTopic");
-//     setTopics(data);
-//     setLoading(false);
+//     if (Role_ID == 5) {
+//       const data = await apiService.get("Topic/AllTopic");
+//       setTopics(data);
+//       setLoading(false);
+//     }
 //   };
 
 //   useEffect(() => {
@@ -106,11 +111,21 @@
 //   const filteredTopics = topics.filter((topic) =>
 //     topic.topic_Name.toLowerCase().includes(searchTerm.toLowerCase())
 //   );
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 10;
+//   const indexOfLastQuestion = currentPage * itemsPerPage;
+//   const indexOfFirstQuestion = indexOfLastQuestion - itemsPerPage;
+//   const currentQuestions = filteredTopics.slice(
+//     indexOfFirstQuestion,
+//     indexOfLastQuestion
+//   );
 
+//   const totalPages = Math.ceil(filteredTopics.length / itemsPerPage);
 //   return (
 //     <>
 //       <div>
 //         <ToastContainer />
+
 //         <div className="card-body">
 //           <div className="header-container">
 //             <div>
@@ -139,7 +154,7 @@
 //                 placeholder="Search Topics"
 //                 value={searchTerm}
 //                 onChange={handleSearchChange}
-//                 className="search-input"
+//                 className="search-inputs"
 //               />
 //               <button onClick={() => setIsOpen(true)} className="btun">
 //                 <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
@@ -156,42 +171,70 @@
 //           <br />
 
 //           {loading && <div className="loading-circle"></div>}
-//           <table className="table table-striped">
-//             <thead>
-//               <tr>
-//                 <th>S.NO</th>
-//                 <th>Topic Name</th>
-//                 <th>Edit</th>
-//                 <th>Delete</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {filteredTopics.map((row, index) => (
-//                 <tr key={row.topic_ID}>
-//                   <td>{index + 1}</td>
-
-//                   <td>{row.topic_Name}</td>
-//                   <td>
-//                     <center>
-//                       <BsPencilSquare
-//                         onClick={() => handleEditClick(row)}
-//                         className="icon1"
-//                       />
-//                     </center>
-//                   </td>
-//                   <td>
-//                     <center>
-//                       <MdDelete
-//                         onClick={() => deleteResource(row.topic_ID)}
-//                         className="icon"
-//                       />
-//                     </center>
-//                   </td>
+//           <div className="table-container">
+//             <table className="table table-striped">
+//               <thead>
+//                 <tr>
+//                   <th>S.No</th>
+//                   <th>Topic Name</th>
+//                   <th>Edit</th>
+//                   <th>Delete</th>
 //                 </tr>
-//               ))}
-//             </tbody>
-//             <Footer></Footer>{" "}
-//           </table>
+//               </thead>
+//               <tbody>
+//                 {currentQuestions.map((row, index) => (
+//                   <tr key={row.topic_ID}>
+//                     <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+
+//                     <td>{row.topic_Name}</td>
+//                     <td>
+//                       <center>
+//                         <BsPencilSquare
+//                           onClick={() => handleEditClick(row)}
+//                           className="icon1"
+//                         />
+//                       </center>
+//                     </td>
+//                     <td>
+//                       <center>
+//                         <MdDelete
+//                           onClick={() => deleteResource(row.topic_ID)}
+//                           className="icon"
+//                         />
+//                       </center>
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//               <Footer></Footer>{" "}
+//             </table>
+//           </div>
+//           <div className="pagination">
+//             {filteredTopics.length > itemsPerPage && (
+//               <>
+//                 <button
+//                   onClick={() =>
+//                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+//                   }
+//                   disabled={currentPage === totalPages}
+//                   className="pagination"
+//                   style={{ width: "60px" }}
+//                 >
+//                   <GrLinkNext size={20} />{" "}
+//                 </button>
+//                 <span>{`Page ${currentPage} of ${totalPages}`}</span>
+//                 <button
+//                   onClick={() =>
+//                     setCurrentPage((prev) => Math.max(prev - 1, 1))
+//                   }
+//                   disabled={currentPage === 1}
+//                   style={{ width: "60px" }}
+//                 >
+//                   <GrLinkPrevious size={20} />{" "}
+//                 </button>
+//               </>
+//             )}
+//           </div>
 //         </div>
 
 //         {/* Edit Modal */}
@@ -278,6 +321,7 @@
 //     </>
 //   );
 // }
+
 import React, { useEffect, useState } from "react";
 import "../AddDepartment/Table.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -286,7 +330,10 @@ import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import { FaSignOutAlt } from "react-icons/fa";
+import { GrLinkPrevious } from "react-icons/gr";
+import { FaSadCry } from "react-icons/fa";
 
+import { GrLinkNext } from "react-icons/gr";
 import Button from "react-bootstrap/Button";
 import apiService from "../../../api";
 import { Link } from "react-router-dom";
@@ -321,6 +368,7 @@ export default function GetTopic() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [topics, setTopics] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State for the search term
+  const Role_ID = localStorage.getItem("Roleid");
 
   // Handle input change for search
   const handleSearchChange = (e) => {
@@ -359,6 +407,7 @@ export default function GetTopic() {
     });
     toast.success(response);
     setIsOpen(false);
+    setInputValues("");
     fetchData();
   };
 
@@ -373,9 +422,11 @@ export default function GetTopic() {
   // Fetch all topics
   const fetchData = async () => {
     setLoading(true);
-    const data = await apiService.get("Topic/AllTopic");
-    setTopics(data);
-    setLoading(false);
+    if (Role_ID == 5) {
+      const data = await apiService.get("Topic/AllTopic");
+      setTopics(data);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -394,17 +445,19 @@ export default function GetTopic() {
     indexOfFirstQuestion,
     indexOfLastQuestion
   );
+
   const totalPages = Math.ceil(filteredTopics.length / itemsPerPage);
   return (
     <>
       <div>
         <ToastContainer />
+
         <div className="card-body">
           <div className="header-container">
             <div>
               <Link to="/">
                 <button
-                  className=" logout-btn"
+                  className="logout-btn"
                   onClick={() => {
                     localStorage.clear();
                     toast.info("Logged out successfully!");
@@ -415,7 +468,7 @@ export default function GetTopic() {
               </Link>
             </div>
 
-            <Datetime></Datetime>
+            <Datetime />
 
             <span>
               <h2>Topics</h2>
@@ -427,13 +480,14 @@ export default function GetTopic() {
                 placeholder="Search Topics"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                className="search-input"
+                className="search-inputs"
               />
               <button onClick={() => setIsOpen(true)} className="btun">
-                <IoMdAddCircle style={{ fontSize: 22 }} />{" "}
+                <IoMdAddCircle style={{ fontSize: 22 }} />
               </button>
             </div>
           </div>
+
           <br />
           <br />
           <br />
@@ -444,59 +498,82 @@ export default function GetTopic() {
           <br />
 
           {loading && <div className="loading-circle"></div>}
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>S.NO</th>
-                <th>Topic Name</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentQuestions.map((row, index) => (
-                <tr key={row.topic_ID}>
-                  <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
 
-                  <td>{row.topic_Name}</td>
-                  <td>
-                    <center>
-                      <BsPencilSquare
-                        onClick={() => handleEditClick(row)}
-                        className="icon1"
-                      />
-                    </center>
-                  </td>
-                  <td>
-                    <center>
-                      <MdDelete
-                        onClick={() => deleteResource(row.topic_ID)}
-                        className="icon"
-                      />
-                    </center>
-                  </td>
+          <div className="table-container">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Topic Name</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
-              ))}
-            </tbody>
-            <Footer></Footer>{" "}
-          </table>
+              </thead>
+              <tbody>
+                {currentQuestions.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "center" }}>
+                      <h4>
+                        {" "}
+                        <FaSadCry style={{ marginRight: "10px" }} />
+                        No Data Found
+                      </h4>
+                    </td>
+                  </tr>
+                ) : (
+                  currentQuestions.map((row, index) => (
+                    <tr key={row.topic_ID}>
+                      <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                      <td>{row.topic_Name}</td>
+                      <td>
+                        <center>
+                          <BsPencilSquare
+                            onClick={() => handleEditClick(row)}
+                            className="icon1"
+                          />
+                        </center>
+                      </td>
+                      <td>
+                        <center>
+                          <MdDelete
+                            onClick={() => deleteResource(row.topic_ID)}
+                            className="icon"
+                          />
+                        </center>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+              <Footer />
+            </table>
+          </div>
+
           <div className="pagination">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="pagination"
-            >
-              Previous
-            </button>
-            <span>{`Page ${currentPage} of ${totalPages}`}</span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
+            {filteredTopics.length > itemsPerPage && (
+              <>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="pagination"
+                  style={{ width: "60px" }}
+                >
+                  <GrLinkNext size={20} />
+                </button>
+                <span>{`Page ${currentPage} of ${totalPages}`}</span>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                  style={{ width: "60px" }}
+                >
+                  <GrLinkPrevious size={20} />
+                </button>
+              </>
+            )}
           </div>
         </div>
 

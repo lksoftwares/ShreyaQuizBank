@@ -11,6 +11,7 @@ import apiService from "../../api";
 
 function Login() {
   const token = localStorage.getItem("token");
+  const url = import.meta.env.VITE_BASE_URL;
 
   const [formData, setFormData] = useState({
     userRole: "",
@@ -37,9 +38,12 @@ function Login() {
       id: user.role_ID,
       label: user.roleName,
     }));
+
     setOptions(userOptions);
   };
-  fetchOptions();
+  useEffect(() => {
+    fetchOptions();
+  }, []);
   //post data
   const navigate = useNavigate();
 
@@ -58,10 +62,7 @@ function Login() {
       console.log("formData", formData.role_ID);
       console.log("formdata", formData);
       // POST request to the registration endpoint
-      const response = await axios.post(
-        "http://192.168.1.56:7241/Users/Login",
-        formData
-      );
+      const response = await axios.post(`${url}/Users/Login`, formData);
       toast.warning(response.data);
       console.log("formData546", response.data.token);
       console.log("gtrdf", response.data);
@@ -73,7 +74,15 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       toast.success(response.data);
       localStorage.getItem("Roleid");
+      // const tuk = response.data.token;
+      // const decodedToken = jwtDecode(tuk);
+      // console.log(
+      //   " decodedToken.RoleID;  decodedToken.RoleID; ",
+      //   decodedToken.role_ID
+      // );
+
       const Role_Id = response.data.role_ID;
+      console.log(Role_Id);
 
       if (Role_Id === 5) {
         navigate("/admin");
@@ -94,7 +103,7 @@ function Login() {
   return (
     <div>
       <ToastContainer />
-      <img src="/src/images/pic1.jpg" alt="" />
+      <img src="../assets/images/pic1.jpg" alt="" />
 
       <div className="login-wrapper log">
         <div className="login-form-container">

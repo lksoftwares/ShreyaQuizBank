@@ -23,18 +23,18 @@ function Home() {
           <Box5 />
         </div>
         <div className="boxx box6">
-          <Box6 />
+          <Box3 />
         </div>{" "}
         <div className="boxx box2">
           <Box2 />
         </div>
         <br />
         <div className="boxx box1 ">
-          <Box1 />
+          <Box6 />
         </div>{" "}
         <br />
         <div className="boxx box3 ">
-          <Box3 />
+          <Box1 />
         </div>{" "}
       </div>
       <Footer></Footer>

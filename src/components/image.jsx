@@ -56,35 +56,11 @@ import React, { useEffect, useState } from "react";
 import "./image.css";
 import apiService from "../../api";
 import { toast } from "react-toastify";
-import axios from "axios";
 export default function Image() {
   const [selectedImage, setSelectedImage] = useState(null);
   const url = import.meta.env.VITE_BASE_URL;
-  // const fetchData = async () => {
-  //   try {
+  console.log("url", url);
   const user_ID = localStorage.getItem("ID");
-  //     const token = localStorage.getItem("token");
-
-  //     const res = await axios({
-  //       method: "get",
-  //       url: `${url}Users/ProfileImage${user_ID}`,
-
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     console.log("res Image data", res.data);
-
-  //     console.log("Image", res.data.imageUrl);
-  //     // setSelectedImage(res.data.imageUrl);
-  //     console.log(selectedImage);
-  //   } catch (error) {
-  //     console.log("error occur", error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // });
 
   const fetchData = async () => {
     const res = await apiService.get(`Users/ProfileImage/${user_ID}`);
@@ -150,10 +126,10 @@ export default function Image() {
             }
             alt="preview"
             style={{
-              width: "150px",
-              height: "150px",
+              width: "130px",
+              height: "130px",
               borderRadius: "50%",
-              marginLeft: "40px",
+              marginLeft: "20px",
               marginTop: "20px",
             }}
           />

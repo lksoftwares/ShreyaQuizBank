@@ -294,7 +294,6 @@ function Sidebar() {
     const fetchData = async () => {
       let data;
 
-      // Fetch all quizzes for admins, user-specific quizzes for regular users
       if (roleId === "5") {
         data = await apiService.get(`QuizTransaction/upcomingQuiz`);
       } else {
@@ -303,9 +302,8 @@ function Sidebar() {
         );
       }
 
-      // Filter out the first element if needed (as in original code)
-      if (data && data.length > 1) {
-        const remainingQuizzes = data.slice(1);
+      if (data && data.length > 0) {
+        const remainingQuizzes = data.slice(0);
         setMyData(remainingQuizzes);
       }
     };
@@ -320,15 +318,15 @@ function Sidebar() {
     const year = String(date.getFullYear());
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
+    // const seconds = String(date.getSeconds()).padStart(2, "0");
 
     const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12; // Convert to 12-hour format
-    hours = hours ? String(hours).padStart(2, "0") : "12"; // Handle '0' hours
+    hours = hours % 12;
+    hours = hours ? String(hours).padStart(2, "0") : "12";
 
     return {
       date: `${day}/${month}/${year}`,
-      time: `${hours}:${minutes}:${seconds} ${ampm}`,
+      time: `${hours}:${minutes} ${ampm}`,
     };
   };
 
@@ -359,7 +357,7 @@ function Sidebar() {
           </ul>
         </marquee>
       ) : (
-        "Loading..."
+        "No Quiz Available..."
       )}
     </div>
   );

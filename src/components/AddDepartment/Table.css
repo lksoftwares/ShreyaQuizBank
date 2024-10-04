@@ -169,7 +169,9 @@ margin-left: 300px;
   margin-left: 630px;
   }
 
-
+  .search-inputs{
+    width: 320px;
+  }
 
   .modal-scroll {
     max-height: 500px; /* Set a max height for the scrollable area */
@@ -201,5 +203,3 @@ margin-left: 300px;
     margin-top: 400px;
     width: 750px;
   }
-
-  

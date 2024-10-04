@@ -5,15 +5,15 @@
   align-items: center;
   border-radius: 8px;
   position: fixed;
-  margin-left: -30px;
+  margin-left: -40px;
 
 }
 
 .headings {
-  font-size: 29px;
+  font-size: 20px;
 color: white;  margin-bottom: 20px;
 margin-bottom: 0px;
-margin-left: 30px;
+margin-left: 20px;
 }
 
 /* Centering the image and heading */
@@ -23,20 +23,17 @@ margin-left: 30px;
 
 /* Styling for the list items */
 .menuuu {
-  display: flex;
-  align-items: center;
   text-decoration: none;
-  color: white; /* Dark grey color */
+  color: white; 
   margin: 10px 0;
-  margin-left: 50px;
-
+display: flex;
   padding: 10px 20px;
   border-radius: 4px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .menuuu:hover {
-  color: white; /* White text color on hover */
+  color: white; 
   background-color: #384256;
 }
 
@@ -57,44 +54,43 @@ margin-left: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 270px; /* Adjust as needed */
+  max-width: 270px; 
 
 }
 
 .scrollableMenu {
-  max-height: 400px; /* Set max height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  width: 300px; /* Make it full width */
+  max-height: 400px;
+  overflow-y: auto; 
+  width: 270px;
 }
 
-/* For WebKit browsers (Chrome, Safari) */
 .scrollableMenu::-webkit-scrollbar {
-  width: 5px; /* Width of the scrollbar */
+  width: 5px; 
 }
 
 .scrollableMenu::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Background of the scrollbar track */
+  background: #f1f1f1; 
 
 }
 
 .scrollableMenu::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar handle */
-  border-radius: 5px; /* Optional: rounded corners */
+  background: #888;
+  border-radius: 5px; 
 
 }
 
 .scrollableMenu::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color of the scrollbar handle on hover */
+  background: #555; 
 }
 
 /* For Firefox */
 .scrollableMenu {
-  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-width: thin; 
   
-  scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
+  scrollbar-color: #888 #f1f1f1; 
 }
 .headd{
-  font-size: 40px;
-  color: white;  margin-bottom: 20px;
+  font-size: 39px;
+  color: white;  margin-bottom: 10px;
   margin-bottom: 0px;
 }

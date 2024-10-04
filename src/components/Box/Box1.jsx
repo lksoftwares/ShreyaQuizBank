@@ -184,12 +184,12 @@ export default function Box5() {
       case "html3":
         return <FaHtml5 />;
       case "java":
-        return <FaJava />;
+        return <FaJava style={{ marginRight: "10px" }} />;
 
       case "laravel":
         return <TbBrandLaravel />;
       default:
-        return <BsFillQuestionSquareFill />; // Default icon
+        return <BsFillQuestionSquareFill style={{ marginRight: "10px" }} />; // Default icon
     }
   };
 

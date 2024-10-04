@@ -58,17 +58,19 @@ margin-top: 10px;}
 }
 .topicsContainer {
   display: flex;
-  justify-content: space-between; /* Distribute evenly */
-  gap: 10px; /* Optional: adjust the spacing between topics */
+  justify-content: space-between; 
+  gap: 10px; 
 }
 
 .listt {
   display: flex;
-  align-items: center; /* Center the text and icon vertically */
-  white-space: nowrap; /* Prevent wrapping of the text */
+  align-items: center; 
+  white-space: nowrap; 
   font-size: 20px;
 }
 .topuser{
-  font-size: 19px;
   font-weight: bold;
+  font-size: 18px !important;
 }
+
+

@@ -33,7 +33,7 @@ input{
     padding-bottom: 25px;
   } */
   .modal-set {
-    margin-top: 400px !important;
+    margin-top: 500px !important;
     margin-left: 800px;
     padding: 15px;
     padding-bottom: 25px;
@@ -103,3 +103,19 @@ input{
     width: 100% !important;
   }
   
+  .table-container {
+    overflow-y: auto;
+    height: 600px;
+  }
+  .table-container thead th {
+    position: sticky;
+    top: 0;
+  }
+  table {
+    border-collapse: collapse;        
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 8px 15px;
+  }

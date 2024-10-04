@@ -472,6 +472,7 @@ import apiService from "../../../api";
 import { Link } from "react-router-dom";
 import Footer from "../footer/footer";
 import Datetime from "../datetime";
+import { FaSadCry } from "react-icons/fa";
 
 function Quiz() {
   const url = import.meta.env.VITE_BASE_URL;
@@ -506,7 +507,7 @@ function Quiz() {
 
   // Get all users
   const fetchDataa = async () => {
-    const data = await apiService.get("Users/AllUSers");
+    const data = await apiService.get("Users/AllUSers?Role_ID=3");
     const optionsData = data.usersLists.map((option) => ({
       value: option.user_ID,
       label: option.user_Name,
@@ -555,15 +556,26 @@ function Quiz() {
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+
+    // Allow only integers
+    if (/^\d*$/.test(value)) {
+      setInputValue(value);
+    }
   };
   const [inputValues, setInputValues] = useState("");
 
   const handleInputsChange = (event) => {
     setInputValues(event.target.value);
   };
-
+  const resetInputs = () => {
+    setInputValue("");
+    setInputValues("");
+    setSelectedOptions([]);
+    setSelectedQues([]);
+    setSelectedTopics([]);
+  };
   const saveQuestions = async () => {
     if (selectedQues.length === 0) {
       toast.warning("No questions selected.");
@@ -590,6 +602,7 @@ function Quiz() {
       },
     }).then((response) => {
       toast.success(response.data);
+      resetInputs();
     });
   };
 
@@ -600,9 +613,7 @@ function Quiz() {
       now.getMonth() + 1
     ).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(
       now.getHours()
-    ).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(
-      now.getSeconds()
-    ).padStart(2, "0")}`;
+    ).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
     setDate(formattedDateTime);
   }, []);
@@ -660,6 +671,14 @@ function Quiz() {
             className="input-cont"
             placeholder="Enter Time"
           />
+          <label className="users marginn">Quiz Name:</label>
+          <input
+            type="text"
+            value={inputValues}
+            onChange={handleInputsChange}
+            className="input-cont"
+            placeholder="Enter Quiz Name"
+          />
         </div>
 
         <div className="input-wrapper">
@@ -668,29 +687,27 @@ function Quiz() {
             isMulti
             value={selectedTopics}
             onChange={handleTopicChange}
-            className=" input-cont dropdown-cont"
+            className="input-cont dropdown-cont "
             options={topics}
             placeholder="Select Topics"
-          />
-          <label className="users marginn">Select User: </label>
+          />{" "}
+        </div>
+        <div className="input-wrapper">
+          <label className="users ">Select Users: </label>
           <Select
             isMulti
             value={selectedOptions}
             className="input-cont dropdown-cont"
             onChange={handleChange}
             options={options}
-            placeholder="Select User"
-          />
-          <label className="users marginn">Quiz Name:</label>
-          <input
-            type="text"
-            value={inputValues}
-            onChange={handleInputsChange}
-            className="input-cont"
-            placeholder="Enter Time"
+            placeholder="Select Users"
           />
         </div>
       </div>
+      <br />
+      <br /> <br />
+      <br />
+      <br /> <br />
       <br />
       <br /> <br />
       <br />
@@ -700,43 +717,53 @@ function Quiz() {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
       {loading && <div className="loading-circle"></div>}
       {error && <p>Error: {error}</p>}
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Topic</th>
-            <th>Question Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.length > 0 ? (
-            filteredData.map((row) => (
-              <tr key={row.ques_ID}>
-                <td>
-                  <input
-                    type="checkbox"
-                    className="input-checkbox"
-                    onChange={() => handleCheckboxChange(row.ques_ID)}
-                  />
-                </td>
-                <td>{row.topic_Name}</td>
-                <td>{row.ques_Desc}</td>
-              </tr>
-            ))
-          ) : (
+      <div className="table-container">
+        <table className="table table-striped">
+          <thead>
             <tr>
-              <td colSpan="7">No Questions Found</td>
+              <th> S.No</th>
+
+              <th></th>
+
+              <th>Topic</th>
+              <th>Question Description</th>
             </tr>
-          )}
-        </tbody>
-        <Footer></Footer>{" "}
-      </table>
+          </thead>
+          <tbody>
+            {filteredData.length > 0 ? (
+              filteredData.map((row, index) => (
+                <tr key={row.ques_ID}>
+                  <td>{index + 1}</td>
+
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="input-checkbox"
+                      onChange={() => handleCheckboxChange(row.ques_ID)}
+                    />
+                  </td>
+
+                  <td>{row.topic_Name}</td>
+                  <td>{row.ques_Desc}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" style={{ textAlign: "center" }}>
+                  <h4>
+                    {" "}
+                    <FaSadCry style={{ marginRight: "10px" }} />
+                    No Data Found
+                  </h4>
+                </td>{" "}
+              </tr>
+            )}
+          </tbody>
+          <Footer></Footer>{" "}
+        </table>
+      </div>
       <button onClick={saveQuestions} className="bg-blue-700 py-3 mt-3 text-md">
         Submit
       </button>

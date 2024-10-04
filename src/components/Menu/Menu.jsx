@@ -55,13 +55,13 @@ const Menu = () => {
   const [menu, setMenu] = useState([]);
 
   const fetchMenu = async () => {
-    const data = await apiService.get(`Menues/getallMenues?Role_ID=${role_ID}`);
+    const data = await apiService.get(`Menues/getallMenues`);
     setMenu(data);
   };
 
   useEffect(() => {
     fetchMenu();
-  }, [role_ID]); // Add dependency to avoid unnecessary calls
+  }, [role_ID]);
 
   const [userDetails, setUserDetails] = useState(null);
   const user_ID = localStorage.getItem("ID");
@@ -110,5 +110,4 @@ const Menu = () => {
     </div>
   );
 };
-
 export default Menu;

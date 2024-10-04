@@ -88,7 +88,7 @@ function UserHome() {
   const user_ID = localStorage.getItem("ID");
   const [myData, setMyData] = useState({
     correctAnswer: "",
-    totalQuestion: "",
+    totalQuestions: "",
   });
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
@@ -150,7 +150,7 @@ function UserHome() {
             <FaCheck /> Correct Answers: {myData.correctAnswer}
           </p>
           <p className="answer question">
-            <FaCircleQuestion /> Total Questions: {myData.totalQuestion}
+            <FaCircleQuestion /> Total Questions: {myData.totalQuestions}
           </p>
         </div>
       </div>
