@@ -316,7 +316,7 @@ export default function QuizTransaction() {
   const user_ID = localStorage.getItem("ID");
   const [showQuizForm, setShowQuizForm] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
 
   const navigate = useNavigate();
   // Fetch data from the API
@@ -324,6 +324,7 @@ export default function QuizTransaction() {
     setLoading(true);
     const data = await apiService.get(`QuizTransaction/willBeQuiz/${user_ID}`);
     setMyData(data);
+    console.log("datadatadata", data);
     setLoading(false);
   };
 
@@ -414,6 +415,16 @@ export default function QuizTransaction() {
           {myData.length === 0 ? (
             <div className="empty-card">
               <h3 style={{ fontSize: 45 }}>No Quiz Available</h3>
+              <img
+                src="../assets/images/nodata.png"
+                alt="dfghj"
+                style={{
+                  height: "500px",
+                  width: "550px",
+                  marginLeft: "350px",
+                  marginTop: "20px",
+                }}
+              />
             </div>
           ) : showQuizForm ? (
             <QuizForm quizData={selectedQuiz} onBack={handleBackToTable} />
@@ -423,6 +434,7 @@ export default function QuizTransaction() {
                 <tr>
                   <th>S.NO</th>
                   <th>Quiz Date</th>
+                  <th>Allowed Time</th>
                   <th>Quiz Name</th>
                   <th>View</th>
                 </tr>
@@ -432,6 +444,7 @@ export default function QuizTransaction() {
                   <tr key={row.id}>
                     <td>{index + 1}</td>
                     <td>{formatDate(row.quiz_Date)}</td>
+                    <td>{row.allowed_Time}</td>
                     <td>{row.quiz_Name}</td>
                     <td>
                       <center>
@@ -451,10 +464,10 @@ export default function QuizTransaction() {
                   </tr>
                 ))}
               </tbody>
-              <Footer />
             </table>
           )}
         </div>
+        <Footer />
       </div>
     </>
   );

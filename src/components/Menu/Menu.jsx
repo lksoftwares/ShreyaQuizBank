@@ -86,21 +86,26 @@ const Menu = () => {
         {userDetails && (
           <h1 className="headings">
             Welcome <br />
-            <p className="headd">{userDetails.user_Name}</p>
+            {userDetails.role_ID === 5 ? (
+              <p className="headd">{userDetails.user_Name} (A)</p>
+            ) : userDetails.role_ID === 3 ? (
+              <p className="headd">{userDetails.user_Name} (U)</p>
+            ) : null}
           </h1>
-        )}
+        )}{" "}
+        <hr className="hr" />
       </center>
       <div className="scrollableMenu">
         {menu.map((item, menu_id) => (
-          <ul key={menu_id}>
+          <ul key={menu_id} style={{ margin: "0px" }}>
             <Link className="menuuu" to={item.menu_URL}>
               {menu_id === 0 && <IoHome />}
-              {menu_id === 1 && <FaUser />}
-              {menu_id === 2 && <MdBorderColor />}
-              {menu_id === 3 && <BsQuestionSquareFill />}
-              {menu_id === 4 && <ImProfile />}
+              {menu_id === 1 && <RiAdminFill />}
+              {menu_id === 2 && <FaUser />}
+              {menu_id === 3 && <ImProfile />}
+              {menu_id === 4 && <BsQuestionSquareFill />}
               {menu_id === 5 && <MdSystemSecurityUpdateGood />}
-              {menu_id === 6 && <RiAdminFill />}
+              {menu_id === 6 && <MdBorderColor />}
               {menu_id === 7 && <BsClipboard2Data />}
               <span className="listItemTitlee">{item.menu_Name}</span>
             </Link>

@@ -128,6 +128,12 @@ border: none !important;
       grid-column: 1 / 3; /* Span across the first two columns */
     }
   } 
+  @media  (max-width: 480px) {
+    .homee{
+      position: fixed;
+    }
+  } 
+
 
 
   

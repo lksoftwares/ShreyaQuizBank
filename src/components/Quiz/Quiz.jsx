@@ -473,7 +473,7 @@ import { Link } from "react-router-dom";
 import Footer from "../footer/footer";
 import Datetime from "../datetime";
 import { FaSadCry } from "react-icons/fa";
-
+import { decryptToken } from "../../utils/crytoutils";
 function Quiz() {
   const url = import.meta.env.VITE_BASE_URL;
   const token = localStorage.getItem("token");
@@ -575,6 +575,7 @@ function Quiz() {
     setSelectedOptions([]);
     setSelectedQues([]);
     setSelectedTopics([]);
+    setSelectedQues([]);
   };
   const saveQuestions = async () => {
     if (selectedQues.length === 0) {
@@ -583,6 +584,12 @@ function Quiz() {
     }
     const userIds = selectedOptions.map((option) => option.value);
 
+    const getToken = () => {
+      const encryptedToken = localStorage.getItem("token");
+      const token = encryptedToken ? decryptToken(encryptedToken) : null;
+      console.log("Decrypted Token:", token);
+      return token;
+    };
     const QuestionData = userIds.flatMap((userId) =>
       selectedQues.map((ques_ID) => ({
         ques_ID,
@@ -592,6 +599,7 @@ function Quiz() {
         quiz_Name: inputValues,
       }))
     );
+    const token = getToken();
 
     await axios({
       method: "post",
@@ -700,6 +708,8 @@ function Quiz() {
             className="input-cont dropdown-cont"
             onChange={handleChange}
             options={options}
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
             placeholder="Select Users"
           />
         </div>
@@ -719,51 +729,49 @@ function Quiz() {
       <br />
       {loading && <div className="loading-circle"></div>}
       {error && <p>Error: {error}</p>}
-      <div className="table-container">
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th> S.No</th>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th> S.No</th>
 
-              <th></th>
+            <th></th>
 
-              <th>Topic</th>
-              <th>Question Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length > 0 ? (
-              filteredData.map((row, index) => (
-                <tr key={row.ques_ID}>
-                  <td>{index + 1}</td>
+            <th>Topic</th>
+            <th>Question Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.length > 0 ? (
+            filteredData.map((row, index) => (
+              <tr key={row.ques_ID}>
+                <td>{index + 1}</td>
 
-                  <td>
-                    <input
-                      type="checkbox"
-                      className="input-checkbox"
-                      onChange={() => handleCheckboxChange(row.ques_ID)}
-                    />
-                  </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    className="input-checkbox"
+                    onChange={() => handleCheckboxChange(row.ques_ID)}
+                  />
+                </td>
 
-                  <td>{row.topic_Name}</td>
-                  <td>{row.ques_Desc}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" style={{ textAlign: "center" }}>
-                  <h4>
-                    {" "}
-                    <FaSadCry style={{ marginRight: "10px" }} />
-                    No Data Found
-                  </h4>
-                </td>{" "}
+                <td>{row.topic_Name}</td>
+                <td>{row.ques_Desc}</td>
               </tr>
-            )}
-          </tbody>
-          <Footer></Footer>{" "}
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" style={{ textAlign: "center" }}>
+                <h4>
+                  {" "}
+                  <FaSadCry style={{ marginRight: "10px" }} />
+                  No Data Found
+                </h4>
+              </td>{" "}
+            </tr>
+          )}
+        </tbody>
+        <Footer></Footer>{" "}
+      </table>
       <button onClick={saveQuestions} className="bg-blue-700 py-3 mt-3 text-md">
         Submit
       </button>

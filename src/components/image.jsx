@@ -54,6 +54,8 @@
 // }
 import React, { useEffect, useState } from "react";
 import "./image.css";
+import { decryptToken } from "../utils/crytoutils";
+
 import apiService from "../../api";
 import { toast } from "react-toastify";
 export default function Image() {
@@ -74,6 +76,12 @@ export default function Image() {
   useEffect(() => {
     fetchData();
   }, []);
+  const getToken = () => {
+    const encryptedToken = localStorage.getItem("token");
+    const token = encryptedToken ? decryptToken(encryptedToken) : null;
+    console.log("Decrypted Token:", token);
+    return token;
+  };
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
 
@@ -81,7 +89,8 @@ export default function Image() {
       // Get user_ID and token from local storage
       const user_ID = localStorage.getItem("ID");
       console.log(user_ID);
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const token = getToken();
 
       const formData = new FormData();
       formData.append("Image", file);
@@ -126,8 +135,8 @@ export default function Image() {
             }
             alt="preview"
             style={{
-              width: "130px",
-              height: "130px",
+              width: "120px",
+              height: "110px",
               borderRadius: "50%",
               marginLeft: "20px",
               marginTop: "20px",

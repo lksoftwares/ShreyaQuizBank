@@ -135,13 +135,11 @@ export default function Box3() {
             <FaUser style={{ marginRight: "5px", marginLeft: "0px" }} /> Name:{" "}
             {myData.user_Name}
             <br />
-            <FaCheck style={{ marginRight: "5px", marginLeft: "-10px" }} />{" "}
+            <FaCheck style={{ marginRight: "5px", marginLeft: "-22px" }} />{" "}
             Correct: {myData.is_Correct} / {myData.totalQuestions}
             <br />
-            <FaChartLine
-              style={{ marginRight: "5px", marginLeft: "26px" }}
-            />{" "}
-            Percentage: {myData.avg_Correct}%
+            <FaChartLine style={{ marginRight: "5px" }} /> Percentage:{" "}
+            {myData.avg_Correct}%
           </>
         ) : (
           <>

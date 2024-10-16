@@ -17,10 +17,17 @@ width: 2000px;
   padding: 5px 20px;
   border-right: 2px solid $soft-bg ;
   height:  2000px;
-  background-color: $main-bg;
+   background-color: $main-bg ;
   margin-top: -10px;
+  
 }
 
+
+.sh{
+    background-color: $main-bg;
+    position: fixed;
+
+}
 .contentcontainerr{
 width: 100%;
 

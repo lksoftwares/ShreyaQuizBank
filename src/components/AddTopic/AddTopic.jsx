@@ -395,30 +395,66 @@ export default function GetTopic() {
         topic_Name: formData.topic_Name,
       }
     );
-    toast.success(response);
-    setIsOpens(false);
-    fetchData();
+    if (response.dup === true) {
+      setIsOpens(true);
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+      setIsOpens(false);
+      fetchData();
+
+      console.log("response.data", response);
+    }
+    // toast.success(response);
+    // setIsOpens(false);
   };
 
   // Add topics
+  const [highlightedFields, setHighlightedFields] = useState({
+    inputValues: false,
+  });
   const handleSubmit = async () => {
     const response = await apiService.post("Topic/AddTopic", {
       Topic_Name: inputValues,
     });
-    toast.success(response);
-    setIsOpen(false);
-    setInputValues("");
+    setHighlightedFields({
+      inputValues: false,
+    });
+    if (!inputValues) {
+      toast.error("All fields are required.");
+      setHighlightedFields({
+        inputValues: !inputValues,
+      });
+
+      return;
+    }
+    if (response.dup === true) {
+      setIsOpen(true);
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+
+      setIsOpen(false);
+      setInputValues("");
+
+      console.log("response.data", response);
+    }
+    // toast.success(response);
+    // setIsOpen(false);
     fetchData();
   };
 
-  // Delete topics
   const deleteResource = async (topic_ID) => {
-    window.alert("Are you sure you want to delete?");
-    const response = await apiService.delete(`Topic/deleteTopic/${topic_ID}`);
-    toast.success(response);
-    fetchData();
-  };
+    const confirmed = window.confirm("Are you sure you want to delete?");
 
+    if (confirmed) {
+      const response = await apiService.delete(`Topic/deleteTopic/${topic_ID}`);
+      toast.success(response);
+      fetchData();
+    } else {
+      toast.warning("Deletion is cancelled.");
+    }
+  };
   // Fetch all topics
   const fetchData = async () => {
     setLoading(true);
@@ -634,7 +670,9 @@ export default function GetTopic() {
           <br />
           <input
             type="text"
-            className="mar inputt"
+            className={`mar inputt ${
+              highlightedFields.inputValues ? "highlight" : ""
+            }`}
             placeholder="Enter Topic Name here "
             name="topic_Name"
             value={inputValues}

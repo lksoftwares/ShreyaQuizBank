@@ -766,7 +766,20 @@ export default function GetData() {
     setInputValues({ ...inputValues, [name]: value });
   };
 
+  const [highlightedFields, setHighlightedFields] = useState({
+    selectOptions: false,
+    selectedOption: false,
+    ques_Desc: false,
+    opt_A: false,
+    opt_B: false,
+    opt_C: false,
+    opt_D: false,
+    correct_Answer: false,
+  });
   const handleSubmit = async () => {
+    const isMultipleChoice =
+      selectedOption.value === "Multiple Choice Questions";
+
     inputValues.topic_ID = selectOptions.id;
     inputValues.quesType_ID = selectedOption.id;
     const response = await apiService.post(
@@ -774,23 +787,71 @@ export default function GetData() {
       inputValues
     );
 
-    toast.success(response);
-    setIsOpen(false);
-    setInputValues("");
-    setSelectOptions("");
-    setSelectedOption("");
+    setHighlightedFields({
+      selectOptions: false,
+      selectedOption: false,
+      ques_Desc: false,
+      opt_A: false,
+      opt_B: false,
+      opt_C: false,
+      opt_D: false,
+      correct_Answer: false,
+    });
+    if (
+      !selectOptions ||
+      !selectedOption ||
+      !inputValues.ques_Desc ||
+      (isMultipleChoice &&
+        (!inputValues.opt_A ||
+          !inputValues.opt_B ||
+          !inputValues.opt_C ||
+          !inputValues.opt_D)) ||
+      !inputValues.correct_Answer
+    ) {
+      toast.error("All fields are required.");
+
+      setHighlightedFields({
+        selectOptions: !selectOptions,
+        selectedOption: !selectedOption,
+        ques_Desc: !inputValues.ques_Desc,
+        opt_A: !inputValues.opt_A,
+        opt_B: !inputValues.opt_B,
+        opt_C: !inputValues.opt_C,
+        opt_D: !inputValues.opt_D,
+        correct_Answer: !inputValues.correct_Answer,
+      });
+      return;
+    }
+    if (response.dup === true) {
+      setIsOpen(true);
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+
+      setIsOpen(false);
+      setInputValues("");
+      setSelectOptions("");
+      setSelectedOption("");
+      console.log("response.data", response.data);
+      console.log("selectedOption.id", selectedOption.id);
+    }
+
     Data();
   };
-
+  //delete data
   const handleDelete = async (ques_ID) => {
-    window.alert("Are you sure to want to delete?");
-    const response = await apiService.delete(
-      `Question/deleteQuestion/${ques_ID}`
-    );
-    toast.success(response);
-    Data();
-  };
+    const confirmed = window.confirm("Are you sure you want to delete?");
 
+    if (confirmed) {
+      const response = await apiService.delete(
+        `Question/deleteQuestion/${ques_ID}`
+      );
+      toast.success(response);
+      Data();
+    } else {
+      toast.warning("Deletion is cancelled.");
+    }
+  };
   const [formData, setFormData] = useState({
     user_ID: "",
     user_Name: "",
@@ -824,6 +885,7 @@ export default function GetData() {
       value: user.quesType_Value,
     }));
     setOption(userOptions);
+    console.log("userOptionsssssssss,", userOptions);
   };
 
   const Data = async () => {
@@ -894,8 +956,17 @@ export default function GetData() {
         quesType_ID: formData.quesType_ID,
       }
     );
-    toast.success(response);
-    handleModalClose();
+    if (response.dup === true) {
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+
+      handleModalClose();
+
+      console.log("response.data", response);
+    }
+    // toast.success(response);
+    // handleModalClose();
     Data();
   };
 
@@ -1064,7 +1135,7 @@ export default function GetData() {
           className="modal-seet scroll"
         >
           <div className="modal-scroll">
-            <fieldset>
+            <fieldset className="dd">
               <center>
                 <h1 className="labell ">Add Question</h1>
               </center>
@@ -1080,7 +1151,9 @@ export default function GetData() {
                   isSearchable={true}
                   value={selectOptions}
                   onChange={handleChoose}
-                  className="dropdown "
+                  className={`dropdown ${
+                    highlightedFields.selectOptions ? "highlight" : ""
+                  }`}
                 />
               </div>
               <br />
@@ -1095,26 +1168,32 @@ export default function GetData() {
                   isSearchable={true}
                   value={selectedOption}
                   onChange={handleDropdownChange}
-                  className="dropdown "
+                  className={`dropdown ${
+                    highlightedFields.selectedOption ? "highlight" : ""
+                  }`}
                 />
               </div>
               <br />
               <h3 className="labell">Question Description : </h3>
               <input
                 type="text"
-                className="margin  "
+                className={`margin ${
+                  highlightedFields.ques_Desc ? "highlight" : ""
+                }`}
                 placeholder="Enter ques Name here "
                 name="ques_Desc"
                 value={inputValues.ques_Desc}
                 onChange={handleData}
               />{" "}
               <h3 className="labell">Answer Option</h3>
-              {selectedOption.value === "mcq" && (
+              {selectedOption.value === "Multiple Choice Questions" && (
                 <div>
                   <input type="text " className="short" placeholder="A" />
                   <input
                     type="text"
-                    className=" small "
+                    className={`small ${
+                      highlightedFields.opt_A ? "highlight" : ""
+                    }`}
                     placeholder="Enter Topic Name here "
                     name="opt_A"
                     value={inputValues.opt_A}
@@ -1128,7 +1207,9 @@ export default function GetData() {
                     />
                     <input
                       type="text"
-                      className=" small "
+                      className={`small ${
+                        highlightedFields.opt_B ? "highlight" : ""
+                      }`}
                       placeholder="Enter Topic Name here "
                       name="opt_B"
                       value={inputValues.opt_B}
@@ -1139,7 +1220,9 @@ export default function GetData() {
                   <input type="text " className="short" placeholder="C" />
                   <input
                     type="text"
-                    className=" small "
+                    className={`small ${
+                      highlightedFields.opt_C ? "highlight" : ""
+                    }`}
                     placeholder="Enter Topic Name here "
                     name="opt_C"
                     value={inputValues.opt_C}
@@ -1153,7 +1236,9 @@ export default function GetData() {
                     />
                     <input
                       type="text"
-                      className=" small "
+                      className={`small ${
+                        highlightedFields.opt_D ? "highlight" : ""
+                      }`}
                       placeholder="Enter Topic Name here "
                       name="opt_D"
                       value={inputValues.opt_D}
@@ -1162,30 +1247,19 @@ export default function GetData() {
                   </span>
                 </div>
               )}
-              {selectedOption.value === "fillups" && (
-                <div>
-                  <p>Please fill the correct Answer:</p>
-                  <input type="text" placeholder="Your answer" />
-                </div>
-              )}
-              {selectedOption.value === "oword" && (
-                <div>
-                  <p>Please fill the correct One Word Answer:</p>
-                  <input type="text" placeholder="Your answer" />
-                </div>
-              )}
               <label htmlFor="" className="labell">
                 Correct Answer:{" "}
               </label>
               <input
                 type="text"
-                className="margin  "
+                className={`margin ${
+                  highlightedFields.correct_Answer ? "highlight" : ""
+                }`}
                 placeholder="Enter correct answer"
                 name="correct_Answer"
                 value={inputValues.correct_Answer}
                 onChange={handleData}
               />{" "}
-              <br />
               <label htmlFor="" className="labell">
                 {" "}
                 Remarks: <br />
@@ -1231,14 +1305,14 @@ export default function GetData() {
         >
           <form onSubmit={handleFormSubmit}>
             <div className="modal-scroll">
-              <fieldset>
+              <fieldset className="dd">
                 <center>
-                  <h1 className="hh1">Edit Question</h1>
+                  <h1 className="labell">Edit Question</h1>
                 </center>
                 <br />
                 <br />
                 <div className="drop">
-                  <label htmlFor=""> Select Topic: </label>
+                  <label className="labell"> Select Topic: </label>
 
                   <Select
                     options={options}
@@ -1251,7 +1325,7 @@ export default function GetData() {
                 </div>
                 <br />
                 <div className="drop">
-                  <label htmlFor=""> Select Typee:</label>
+                  <label className="labell"> Select Typee:</label>
                   <Select
                     options={option}
                     placeholder="Select Type"
@@ -1263,7 +1337,7 @@ export default function GetData() {
                   />
                 </div>
                 <br />
-                <h3>Question Description : </h3>
+                <h3 className="labell">Question Description : </h3>
                 <input
                   type="text"
                   className="margin  "
@@ -1272,8 +1346,8 @@ export default function GetData() {
                   value={formData.ques_Desc}
                   onChange={handleInputChange}
                 />{" "}
-                <h3>Answer Option</h3>
-                {selectedOption.value === "mcq" && (
+                <h3 className="labell">Answer Option</h3>
+                {selectedOption.value === "Multiple Choice Questions" && (
                   <div>
                     <input type="text " className="short" placeholder="A" />
                     <input
@@ -1326,19 +1400,7 @@ export default function GetData() {
                     </span>
                   </div>
                 )}
-                {selectedOption.value === "fillups" && (
-                  <div>
-                    <p>Please fill the correct Answer:</p>
-                    <input type="text" placeholder="Your answer" />
-                  </div>
-                )}
-                {selectedOption.value === "oword" && (
-                  <div>
-                    <p>Please fill the correct One Word Answer:</p>
-                    <input type="text" placeholder="Your answer" />
-                  </div>
-                )}
-                <label htmlFor="">Correct Answer: </label>
+                <label className="labell">Correct Answer: </label>
                 <input
                   type="text"
                   className="margin  "
@@ -1347,9 +1409,7 @@ export default function GetData() {
                   value={formData.correct_Answer}
                   onChange={handleInputChange}
                 />{" "}
-                <br />
-                <label htmlFor=""> Remarks: </label>
-                <br />
+                <label className="labell"> Remarks: </label>
                 <input
                   type="text"
                   className="margin  "

@@ -9,6 +9,13 @@
   margin-left: 50px;
 }
 
+.input-wrappers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+  width: 1100px;
+}
 .input-cont {
   flex: 1; 
   min-width: 100px;

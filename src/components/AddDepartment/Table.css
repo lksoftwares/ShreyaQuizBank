@@ -141,7 +141,7 @@ margin-left: 300px;
   margin-top:5px;
 }
   .labell{
-    color: black;
+    color: white;
   }
 
 .margin{
@@ -172,12 +172,17 @@ margin-left: 300px;
   .search-inputs{
     width: 320px;
   }
-
+.dd{
+  background-color: #2a3447;
+  border: none
+  ;
+}
   .modal-scroll {
     max-height: 500px; /* Set a max height for the scrollable area */
     overflow-x: auto; /* Enable vertical scrolling */
     scrollbar-width: thin; /* Thin scrollbar for Firefox */
     scrollbar-color: #888 #f1f1f1; /* Thumb color and track color for Firefox */
+    background-color: #2a3447;
   }
   
   /* For WebKit browsers (Chrome, Safari) */
@@ -202,4 +207,5 @@ margin-left: 300px;
     margin-left: 800px;
     margin-top: 400px;
     width: 750px;
+
   }

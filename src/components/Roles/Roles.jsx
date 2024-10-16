@@ -400,24 +400,49 @@ export default function Roles() {
   }, [searchQuery]);
 
   //add roles
+  const [highlightedFields, setHighlightedFields] = useState({
+    inputValues: false,
+  });
   const handleSubmit = async () => {
     const response = await apiService.post("Roles/AddRole", {
       roleName: inputValues,
     });
-    toast.success(response);
-    setInputValues("");
+    setHighlightedFields({
+      inputValues: false,
+    });
+    if (!inputValues) {
+      toast.error("All fields are required.");
+      setHighlightedFields({
+        inputValues: !inputValues,
+      });
+      return;
+    }
+    if (response.dup === true) {
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+      setInputValues("");
 
-    handleClose();
+      handleClose();
+
+      console.log("response.data", response);
+    }
+    // toast.success(response);
+    // handleClose();
 
     Data();
   };
 
-  //delete roles
   const handleDelete = async (role_ID) => {
-    window.alert("Are you sure you want to delete?");
-    const response = await apiService.delete(`Roles/deleteRole/${role_ID}`);
-    toast.success(response);
-    Data();
+    const confirmed = window.confirm("Are you sure you want to delete?");
+
+    if (confirmed) {
+      const response = await apiService.delete(`Roles/deleteRole/${role_ID}`);
+      toast.success(response);
+      Data();
+    } else {
+      toast.warning("Deletion is cancelled.");
+    }
   };
 
   const handleEditClick = (row) => {
@@ -440,8 +465,17 @@ export default function Roles() {
         roleName: formData.roleName,
       }
     );
-    toast.success(response);
-    handleModalsClose();
+    if (response.dup === true) {
+      toast.warning(response.message);
+    } else {
+      toast.success(response.message);
+
+      handleModalsClose();
+
+      console.log("response.data", response);
+    }
+    // toast.success(response);
+    // handleModalsClose();
     Data();
   };
   const [currentPage, setCurrentPage] = useState(1);
@@ -624,7 +658,9 @@ export default function Roles() {
           <br />
           <input
             type="text"
-            className="mar inputt"
+            className={`mar inputt ${
+              highlightedFields.inputValues ? "highlight" : ""
+            }`}
             placeholder="Enter Role Name here"
             value={inputValues}
             onChange={handleData}
